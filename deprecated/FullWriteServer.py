@@ -1,20 +1,8 @@
 import socket
 import time
-
-def full_write(fd, data):
-    total_sent = 0
-    while total_sent < len(data):
-        try:
-            sent = fd.send(data[total_sent:])
-            if sent == 0:
-                raise OSError("Socket connection broken")
-            total_sent += sent
-        except socket.error as e:
-            if e.errno == socket.errno.EINTR:
-                continue
-            else:
-                raise
-    return total_sent
+import sys
+from FullWrite import FullWrite
+from FullRead import FullRead
 
 def main(ip_address):
     listenfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -33,7 +21,11 @@ def main(ip_address):
             ticks = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             response = f"{'pisnelo'}\r\n"
 
-            full_write(connfd, response.encode())
+            FullWrite(connfd, response.encode())
+            recvline = FullRead(connfd, 1024)
+            if sys.stdout.buffer.write(recvline) == -1:
+                sys.stderr.write("fputs error\n")
+                sys.exit(1)
             connfd.close()
 
     except socket.error as e:

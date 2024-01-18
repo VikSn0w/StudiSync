@@ -1,21 +1,7 @@
-import socket
 import sys
-
-def full_read(fd, count):
-    data = b""
-    while count > 0:
-        try:
-            chunk = fd.recv(count)
-            if not chunk:
-                break
-            data += chunk
-            count -= len(chunk)
-        except socket.error as e:
-            if e.errno == socket.errno.EINTR:
-                continue
-            else:
-                raise
-    return data
+import socket
+from FullWrite import FullWrite
+from FullRead import FullRead
 
 def main(ip_address):
 
@@ -30,7 +16,9 @@ def main(ip_address):
         sockfd.connect(servaddr)
         print(f"Connected to {ip_address}:{port}")
 
-        recvline = full_read(sockfd, 1024)
+        request = "read"
+        FullWrite(sockfd, request.encode())
+        recvline = FullRead(sockfd, 1024)
 
         if sys.stdout.buffer.write(recvline) == -1:
             sys.stderr.write("fputs error\n")

@@ -2,16 +2,23 @@ import socket
 import sys
 import asyncio
 from common.bcolors import bcolors
+from common.communication import object_to_json_string, customHash
 from common.full_write import full_write
+import json
 
 MAXLINE = 256
 
-async def read_input(filein, sock):
+
+async def read_input(data, sock):
+    # Read strings directly instead of using filein.readline
     while True:
-        data = await asyncio.to_thread(filein.readline)
+        # Simulate the end of input with an empty string
         if not data:
             break
         await asyncio.to_thread(full_write, sock, data.encode())
+        # Break out of the loop after writing the data
+        break
+
 
 async def read_socket(sock):
     while True:
@@ -22,11 +29,13 @@ async def read_socket(sock):
         sys.stdout.buffer.write(recvbuff)
         sys.stdout.flush()
 
-async def client_echo(filein, sock):
+
+async def client_echo(data, sock):
     await asyncio.gather(
-        read_input(filein, sock),
+        read_input(data, sock),
         read_socket(sock)
     )
+
 
 if __name__ == "__main__":
 
@@ -42,4 +51,6 @@ if __name__ == "__main__":
         sys.exit(1)
 
     print("Writing I/O")
-    asyncio.run(client_echo(sys.stdin, sock))
+    print(str(customHash("test123")) == "1914752590")
+    input_data = {"header": "StudentsLogin", "payload": {"Matricola": "0124002584","Password":"test123"}}
+    asyncio.run(client_echo(json.dumps(input_data), sock))

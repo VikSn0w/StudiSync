@@ -36,12 +36,10 @@ async def client_echo(data, sock):
         read_socket(sock)
     )
 
-
-if __name__ == "__main__":
-
+def launchMethod(input:str, server_address:str, server_port:int):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    serv_add = ("127.0.0.1", 1024)
+    serv_add = (server_address, server_port)
 
     try:
         sock.connect(serv_add)
@@ -50,7 +48,8 @@ if __name__ == "__main__":
         print(f"{bcolors.FAIL}Connection error: {e}{bcolors.ENDC}")
         sys.exit(1)
 
-    print("Writing I/O")
-    print(str(customHash("test123")) == "1914752590")
-    input_data = {"header": "StudentsLogin", "payload": {"Matricola": "0124002584","Password":"test123"}}
-    asyncio.run(client_echo(json.dumps(input_data), sock))
+    asyncio.run(client_echo(input, sock))
+
+if __name__ == "__main__":
+    input_data = {"header": "StudentsLogin", "payload": {"Matricola": "0124002584", "Password": "test123"}}
+    launchMethod(json.dumps(input_data), "127.0.0.1", 1024)

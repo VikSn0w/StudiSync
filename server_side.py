@@ -7,11 +7,10 @@ def default_case():
     return "Method not implemented"
 
 def StudentsLogin(payload):
-    result_row = find_row("db/users/office.csv", {"Matricola": payload["Matricola"]})
+    result_row = find_row("db/users/students.csv", {"Matricola": payload["Matricola"]})
     if "Password" in payload:
-        hash = customHash(payload["Password"])
-        print(hash,result_row[4])
-        if str(result_row[4]) == str(hash):
+        print(payload["Password"], result_row[4])
+        if str(result_row[4]) == str(payload["Password"]):
             return result_row if result_row else False
         else:
             return False
@@ -21,9 +20,8 @@ def StudentsLogin(payload):
 def OfficeLogin(payload):
     result_row = find_row("db/users/office.csv", {"Email": payload["Email"]})
     if "Password" in payload:
-        hash = customHash(payload["Password"])
-        print(hash,result_row[4])
-        if str(result_row[4]) == str(hash):
+        print(payload["Password"],result_row[4])
+        if str(result_row[4]) == str(payload["Password"]):
             return result_row if result_row else False
         else:
             return False

@@ -1,4 +1,5 @@
 import csv
+import json
 
 
 def parse_communication_protocol(communication_string):
@@ -84,3 +85,12 @@ def find_row(csv_file, search_criteria):
                 return row
 
     return None  # Return None if the row is not found
+
+def request_constructor_obj(input_object, header):
+    return {
+        "header": header,
+        "payload":input_object
+    }
+
+def request_constructor_str(input_object, header):
+    return json.dumps(request_constructor_obj(input_object,header))

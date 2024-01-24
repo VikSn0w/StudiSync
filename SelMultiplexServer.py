@@ -55,6 +55,7 @@ def server_main(server_address, server_port):
                     data_decoded = json.loads(data_decoded)
 
                     result = method_switch(data_decoded["header"], data_decoded["payload"])
+                    print(result)
                     response = f"{result}".encode()
                     if full_write(fd, response):
                         print(f"Error in writing data to {fd.getpeername()}")

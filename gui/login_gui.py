@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'gui.ui'
+# Form implementation generated from reading ui file 'login_gui.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -122,7 +122,7 @@ class Ui_Login(object):
         self.Title.setText(_translate("Login", "StudiSync"))
         self.LoginTitle.setText(_translate("Login", "Login"))
         self.LoginButton.setText(_translate("Login", "Login"))
-        self.EmailBox.setTitle(_translate("Login", "Email"))
+        self.EmailBox.setTitle(_translate("Login", "Email/Matricola"))
         self.PasswordBox.setTitle(_translate("Login", "Password"))
         self.ComboBoxSelect.setItemText(0, _translate("Login", "Students"))
         self.ComboBoxSelect.setItemText(1, _translate("Login", "Office"))

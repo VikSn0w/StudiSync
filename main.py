@@ -1,10 +1,10 @@
-import json
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
+from pyqt5_plugins.examplebutton import QtWidgets
 
 from SelMultiplexClient import launchMethod
 from common.communication import customHash, request_constructor_str
-from gui import Ui_Login
+from gui.login_gui import Ui_Login
 
 
 class MyApp(QMainWindow):
@@ -19,14 +19,17 @@ class MyApp(QMainWindow):
         username = self.ui.EmailField.text()
         combobox = self.ui.ComboBoxSelect.currentText()
         result = None
-        if(combobox == "Students"):
+
+        if combobox == "Students":
             toSend = {"Matricola":username, "Password": password}
             result = launchMethod(request_constructor_str(toSend,"StudentsLogin"),"127.0.0.1", 1024)
 
-        elif (combobox == "Office"):
+        elif combobox == "Office":
             toSend = {"Email": username, "Password": password}
             result = launchMethod(request_constructor_str(toSend, "OfficeLogin"), "127.0.0.1", 1024)
-        print(password, username, combobox, result)
+
+        if result == "false":
+            QMessageBox.critical(None, "Login - Error", "")
 
     def openMainWindow(self):
         print("open")

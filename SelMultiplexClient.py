@@ -1,55 +1,55 @@
 import socket
 import sys
 import asyncio
-from common.bcolors import bcolors
-from common.communication import object_to_json_string, customHash
-from common.full_write import full_write
 import json
+
+from common.full_write import full_write
 
 MAXLINE = 256
 
 
-async def read_input(data, sock):
-    # Read strings directly instead of using filein.readline
-    while True:
-        # Simulate the end of input with an empty string
-        if not data:
-            break
-        await asyncio.to_thread(full_write, sock, data.encode())
-        # Break out of the loop after writing the data
-        break
-
-
 async def read_socket(sock):
+    received_data = ""
     while True:
         recvbuff = await asyncio.to_thread(sock.recv, MAXLINE)
         if not recvbuff:
-            print(f"{bcolors.WARNING}EOF on the socket{bcolors.ENDC}")
+            print("EOF on the socket")
             break
-        sys.stdout.buffer.write(recvbuff)
-        sys.stdout.flush()
+        if not recvbuff.strip():
+            print("Empty data received. Closing the socket.")
+            break
+        received_data += recvbuff.decode()
+    return received_data
 
 
 async def client_echo(data, sock):
-    await asyncio.gather(
-        read_input(data, sock),
-        read_socket(sock)
-    )
+    # Write the data using full_write
+    await asyncio.to_thread(full_write, sock, data.encode())
+    # Wait for the socket to be flushed (optional)
+    await asyncio.to_thread(sock.shutdown, socket.SHUT_WR)
+    return await read_socket(sock)
 
-def launchMethod(input:str, server_address:str, server_port:int):
+
+def launchMethod(input: str, server_address: str, server_port: int):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     serv_add = (server_address, server_port)
 
     try:
         sock.connect(serv_add)
-        print(f"{bcolors.OKGREEN}Connection to {serv_add} established!{bcolors.ENDC}")
+        print(f"Connection to {serv_add} established!")
     except Exception as e:
-        print(f"{bcolors.FAIL}Connection error: {e}{bcolors.ENDC}")
+        print(f"Connection error: {e}")
         sys.exit(1)
 
-    asyncio.run(client_echo(input, sock))
+    result = asyncio.run(client_echo(input, sock))
+
+    # Close the socket after finishing the data stream
+    sock.close()
+
+    return result
+
 
 if __name__ == "__main__":
     input_data = {"header": "StudentsLogin", "payload": {"Matricola": "0124002584", "Password": "test123"}}
-    launchMethod(json.dumps(input_data), "127.0.0.1", 1024)
+    result = launchMethod(json.dumps(input_data), "127.0.0.1", 1024)

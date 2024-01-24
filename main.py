@@ -18,13 +18,15 @@ class MyApp(QMainWindow):
         password = str(customHash(self.ui.PasswordField.text()))
         username = self.ui.EmailField.text()
         combobox = self.ui.ComboBoxSelect.currentText()
+        result = None
         if(combobox == "Students"):
             toSend = {"Matricola":username, "Password": password}
-            launchMethod(request_constructor_str(toSend,"StudentsLogin"),"127.0.0.1", 1024)
+            result = launchMethod(request_constructor_str(toSend,"StudentsLogin"),"127.0.0.1", 1024)
+
         elif (combobox == "Office"):
             toSend = {"Email": username, "Password": password}
-            launchMethod(request_constructor_str(toSend, "OfficeLogin"), "127.0.0.1", 1024)
-        print(password, username, combobox)
+            result = launchMethod(request_constructor_str(toSend, "OfficeLogin"), "127.0.0.1", 1024)
+        print(password, username, combobox, result)
 
     def openMainWindow(self):
         print("open")

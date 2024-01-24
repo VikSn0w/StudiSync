@@ -55,23 +55,22 @@ def server_main(server_address, server_port):
                     data_decoded = json.loads(data_decoded)
 
                     result = method_switch(data_decoded["header"], data_decoded["payload"])
-                    print(result)
-                    response = f"{result}".encode()
+                    response = f"{json.dumps(result)}".encode()
                     if full_write(fd, response):
                         print(f"Error in writing data to {fd.getpeername()}")
                         fd.close()
+
                 except socket.error as e:
                     # Handle specific socket error: [WinError 10054]
                     if e.errno == 10054:
                         print(f"Connection forcibly closed by the remote host {fd.getpeername()}")
                     else:
-                        print(f"{bcolors.FAIL} Error: {e}{bcolors.ENDC}")
+                        print(f"{bcolors.FAIL} Socket Error: {e}{bcolors.ENDC}")
                     # Close the connection
                     fd.close()
                     del fd_open[i]
                 except Exception as e:
-                    print(f"{bcolors.FAIL} Error: {e}{bcolors.ENDC}")
-                    # Close the connection for other exceptions
+                    print(f"{bcolors.FAIL} Generic Exception Error: {e}{bcolors.ENDC}")
                     fd.close()
                     del fd_open[i]
 

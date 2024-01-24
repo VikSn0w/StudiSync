@@ -1,6 +1,4 @@
-import common.communication
 from common.communication import find_row
-from common.communication import customHash
 
 
 def default_case():
@@ -8,10 +6,12 @@ def default_case():
 
 def StudentsLogin(payload):
     result_row = find_row("db/users/students.csv", {"Matricola": payload["Matricola"]})
-    if "Password" in payload:
-        print(payload["Password"], result_row[4])
-        if str(result_row[4]) == str(payload["Password"]):
-            return result_row if result_row else False
+    if result_row:
+        if "Password" in payload:
+            if str(result_row[4]) == str(payload["Password"]):
+                return result_row
+            else:
+                return False
         else:
             return False
     else:
@@ -19,10 +19,12 @@ def StudentsLogin(payload):
 
 def OfficeLogin(payload):
     result_row = find_row("db/users/office.csv", {"Email": payload["Email"]})
-    if "Password" in payload:
-        print(payload["Password"],result_row[4])
-        if str(result_row[4]) == str(payload["Password"]):
-            return result_row if result_row else False
+    if result_row:
+        if "Password" in payload:
+            if str(result_row[4]) == str(payload["Password"]):
+                return result_row
+            else:
+                return False
         else:
             return False
     else:
@@ -30,13 +32,11 @@ def OfficeLogin(payload):
 
 
 def method_switch(method, payload):
-    switch_dict = {
-        "StudentsLogin": StudentsLogin(payload),
-        "OfficeLogin": OfficeLogin(payload),
-    }
+    match method:
+        case "StudentsLogin":
+            return StudentsLogin(payload)
+        case "OfficeLogin":
+            return OfficeLogin(payload)
+        case _:
+            return default_case()
 
-    # Use get() to handle default case
-    selected_case = switch_dict.get(method,default_case)
-
-    # Call the selected case function
-    return selected_case

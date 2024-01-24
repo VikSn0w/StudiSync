@@ -3,14 +3,14 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="\db\utente\segreteria.csv">
+        <entry key="\db\users\office.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="\db\utente\studenti.csv">
+        <entry key="\db\users\students.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

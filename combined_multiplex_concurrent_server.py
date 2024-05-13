@@ -34,7 +34,7 @@ class MyHandler(socketserver.StreamRequestHandler):
                 print(f"Parsed Data: {data_decoded}")
 
                 result = method_switch(data_decoded["header"], data_decoded["payload"])
-                response = f"{json.dumps(result)}\r\n".encode("utf-8")
+                response = f"{json.dumps(result)}".encode("utf-8")
                 print(f"Response to send: {response}")
 
                 # Use blocking send to ensure the response is fully sent before closing

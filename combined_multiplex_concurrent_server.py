@@ -11,6 +11,7 @@ from server_side import method_switch
 
 MAXLINE = 256
 
+
 class MyHandler(socketserver.StreamRequestHandler):
     def handle(self):
         timeval = time.ctime(time.time())
@@ -49,8 +50,10 @@ class MyHandler(socketserver.StreamRequestHandler):
                 print(f"{bcolors.FAIL} Generic Exception Error: {e}{bcolors.ENDC}")
                 break
 
+
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
+
 
 def server_main(server_address, server_port):
     server = ThreadedTCPServer((server_address, server_port), MyHandler)
@@ -62,6 +65,7 @@ def server_main(server_address, server_port):
         server_thread.join()
     except KeyboardInterrupt:
         print("Server terminated by user")
+
 
 if __name__ == "__main__":
     server_main("127.0.0.1", 1024)

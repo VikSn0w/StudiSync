@@ -1,12 +1,13 @@
+import json
 import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 # from pyqt5_plugins.examplebutton import QtWidgets
 
 from SelMultiplexClient import launchMethod
-from common.communication import customHash, request_constructor_str
+from common.communication import customHash, request_constructor_str, formato_data
 from gui.login_gui import Ui_Login
 from logic import students_home_logic
-
+from logic import segreteria_home_logic
 
 class LoginLogic(QMainWindow):
     def __init__(self):
@@ -35,14 +36,35 @@ class LoginLogic(QMainWindow):
                                  "Email, Password or User type incorrect.\nCheck your info and retry.")
         else:
             try:
-                self.openMainWindow(result)
+                if combobox == "Students":
+                    self.openStudentHomeWindow(result)
+                if combobox == "Office":
+                    self.openSegreteriaHomeWindow(result)
             except Exception as e:
                 print(e)
 
-    def openMainWindow(self, user):
+    def openStudentHomeWindow(self, user):
         self.main_window = students_home_logic.StudentsHomeLogic(user)
         self.close()
+        user = json.loads(user)
+        print(user)
+        self.main_window.ui.MtrLabel.setText(user[0])
+        self.main_window.ui.NameLastnameLabel.setText(f"{user[1]}, {user[2]}")
+        self.main_window.ui.DateLabel.setText(f"{formato_data()}")
+
         self.main_window.show()
+
+    def openSegreteriaHomeWindow(self, user):
+        self.main_window = segreteria_home_logic.SegreteriaHomeLogic(user)
+        self.close()
+        user = json.loads(user)
+        print(user)
+        self.main_window.ui.MtrLabel.setText(user[0])
+        self.main_window.ui.NameLastnameLabel.setText(f"{user[1]}, {user[2]}")
+        self.main_window.ui.DateLabel.setText(f"{formato_data()}")
+
+        self.main_window.show()
+
 
 
 

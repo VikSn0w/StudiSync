@@ -1,4 +1,5 @@
 import csv
+import datetime
 import json
 
 
@@ -99,3 +100,21 @@ def request_constructor_obj(input_object, header):
 
 def request_constructor_str(input_object, header):
     return json.dumps(request_constructor_obj(input_object, header))
+
+def formato_data():
+    # Definisci i nomi dei giorni della settimana e dei mesi
+    nomi_giorni = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"]
+    nomi_mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"]
+
+    # Ottieni la data e l'ora attuali
+    oggi = datetime.datetime.now()
+
+    # Ottieni il giorno della settimana, il giorno del mese e il mese attuali
+    giorno_settimana = nomi_giorni[oggi.weekday()]
+    giorno_mese = oggi.day
+    mese = nomi_mesi[oggi.month - 1]
+    anno = oggi.year
+
+    # Costruisci la stringa con il formato richiesto
+    data_formattata = f"{giorno_settimana} {giorno_mese} {mese} {anno}"
+    return data_formattata

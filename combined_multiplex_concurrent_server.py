@@ -14,9 +14,9 @@ MAXLINE = 256
 
 class MyHandler(socketserver.StreamRequestHandler):
     def handle(self):
-        timeval = time.ctime(time.time())
-        buffer = f"{timeval}\r\n".encode('utf-8')
-        full_write(self.request, buffer)
+        #timeval = time.ctime(time.time())
+        #buffer = f"{timeval}\r\n".encode('utf-8')
+        #full_write(self.request, buffer)
 
         host, port = self.client_address
         print(f"Request from host {host}, port {port}")
@@ -35,11 +35,12 @@ class MyHandler(socketserver.StreamRequestHandler):
                 print(f"Parsed Data: {data_decoded}")
 
                 result = method_switch(data_decoded["header"], data_decoded["payload"])
-                response = f"{json.dumps(result)}\r\n".encode()
+                response = f"{json.dumps(result)}".encode("utf-8")
+                print(f"Response to send: {response}")
 
                 # Use blocking send to ensure the response is fully sent before closing
-                full_write(self.request, response)
-
+                sent = full_write(self.request, response)
+                print(f"Sent {sent}")
             except socket.error as e:
                 if e.errno == 10054:
                     print(f"Connection forcibly closed by the remote host {self.client_address}")

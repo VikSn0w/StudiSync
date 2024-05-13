@@ -7,7 +7,7 @@ from common.communication import customHash, request_constructor_str
 from gui.students_home_gui import Ui_Students_Home
 
 
-class MyApp(QMainWindow):
+class StudentsHomeLogic(QMainWindow):
     user = None
     def __init__(self,user):
         self.user = user
@@ -23,11 +23,8 @@ class MyApp(QMainWindow):
         self.main_window.ui.nameLabel.setText(self.ui.usernameTextField.text())'''
 
 def run(user):
-    print(user)
-    app = QApplication(sys.argv)
-    window = MyApp(user)
+    window = StudentsHomeLogic(user)
     window.show()
-    sys.exit(app.exec_())
 
 if __name__ == "__main__":
-    run()
+    run('["0124002584", "Vittorio", "Picone", "vittorio.picone001@studenti.uniparthenope.it", "1914752590"]')

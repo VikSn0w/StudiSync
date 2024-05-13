@@ -8,7 +8,7 @@ from gui.login_gui import Ui_Login
 from logic import students_home_logic
 
 
-class MyApp(QMainWindow):
+class LoginLogic(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_Login()
@@ -28,21 +28,27 @@ class MyApp(QMainWindow):
             toSend = {"Email": username, "Password": password}
             result = launchMethod(request_constructor_str(toSend, "OfficeLogin"), "127.0.0.1", 1024)
 
+        result = result.replace("\n", "")
+        result = result.replace("\r", "")
         if result == "false":
             QMessageBox.critical(None, "Login - Error",
                                  "Email, Password or User type incorrect.\nCheck your info and retry.")
         else:
-            self.openMainWindow(result)
+            try:
+                self.openMainWindow(result)
+            except Exception as e:
+                print(e)
 
     def openMainWindow(self, user):
-        print("open")
-        students_home_logic.run(user)
+        self.main_window = students_home_logic.StudentsHomeLogic(user)
         self.close()
+        self.main_window.show()
+
 
 
 def run():
     app = QApplication(sys.argv)
-    window = MyApp()
+    window = LoginLogic()
     window.show()
     sys.exit(app.exec_())
 

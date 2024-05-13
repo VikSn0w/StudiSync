@@ -53,3 +53,4 @@ def launchMethod(input: str, server_address: str, server_port: int):
 if __name__ == "__main__":
     input_data = {"header": "StudentsLogin", "payload": {"Matricola": "0124002584", "Password": "test123"}}
     result = launchMethod(json.dumps(input_data), "127.0.0.1", 1024)
+    print(result)

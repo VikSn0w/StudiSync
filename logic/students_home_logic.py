@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
-from pyqt5_plugins.examplebutton import QtWidgets
+#from pyqt5_plugins.examplebutton import QtWidgets
 
 from SelMultiplexClient import launchMethod
 from common.communication import customHash, request_constructor_str

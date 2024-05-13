@@ -45,7 +45,7 @@
      <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
-        <string>Chiedi alla segreteria se ci siano esami disponibili per un corso</string>
+        <string>Inserisci gli esami sul server dell'università </string>
        </property>
       </widget>
      </item>
@@ -65,7 +65,27 @@
      <item>
       <widget class="QPushButton" name="pushButton_2">
        <property name="text">
-        <string>Invia una richiesta di prenotazione di un esame alla segreteria</string>
+        <string>Inoltra la richiesta di prenotazione degli studenti al server universitario</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>Fornisci allo studente le date degli esami disponibili per l'esame scelto dallo studente</string>
        </property>
       </widget>
      </item>

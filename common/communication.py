@@ -24,9 +24,9 @@ def parse_communication_protocol(communication_string):
     payload_array = {}
     payload_segments = payload.split(';')
 
-
     return {"Header": header_array, "Payload": payload}
 
+"""
 def object_to_json_string(obj):
     # Check if the object is a dictionary
     if isinstance(obj, dict):
@@ -43,6 +43,7 @@ def object_to_json_string(obj):
     # Raise an exception for unsupported types
     else:
         raise TypeError(f"Unsupported type: {type(obj)}")
+
 
 def json_string_to_object(json_string):
     # Ensure the input is a string
@@ -66,12 +67,14 @@ def json_string_to_object(json_string):
         return result_dict
     else:
         raise ValueError("Invalid JSON string")
+"""
 
-def customHash(text:str):
-  hash=0
-  for ch in text:
-    hash = ( hash*281  ^ ord(ch)*997) & 0xFFFFFFFF
-  return hash
+def customHash(text: str):
+    hash = 0
+    for ch in text:
+        hash = (hash * 281 ^ ord(ch) * 997) & 0xFFFFFFFF
+    return hash
+
 
 def find_row(csv_file, search_criteria):
     with open(csv_file, 'r', newline='') as file:
@@ -86,11 +89,13 @@ def find_row(csv_file, search_criteria):
 
     return None  # Return None if the row is not found
 
+
 def request_constructor_obj(input_object, header):
     return {
         "header": header,
-        "payload":input_object
+        "payload": input_object
     }
 
+
 def request_constructor_str(input_object, header):
-    return json.dumps(request_constructor_obj(input_object,header))
+    return json.dumps(request_constructor_obj(input_object, header))

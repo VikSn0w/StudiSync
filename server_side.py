@@ -11,7 +11,7 @@ def StudentsLogin(payload):
             if str(result_row[4]) == str(payload["Password"]):
                 result_row.append(find_row("db/esami/laurea.csv", search_criteria={"ID": result_row[5]}))
                 print(result_row)
-                result_row.append(find_rows("db/esami/corsi.csv", search_criteria={"CFU": 6}))
+                result_row.append(find_rows("db/esami/corsi.csv", search_criteria={"Laurea": result_row[5]}))
                 return result_row
             else:
                 return False

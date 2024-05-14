@@ -27,48 +27,6 @@ def parse_communication_protocol(communication_string):
 
     return {"Header": header_array, "Payload": payload}
 
-"""
-def object_to_json_string(obj):
-    # Check if the object is a dictionary
-    if isinstance(obj, dict):
-        items = []
-        for key, value in obj.items():
-            items.append(f'"{key}": "{value}"')
-        return "{" + ", ".join(items) + "}"
-
-    # Handle other types as needed (this is a basic example)
-    # You may need to add more logic for other data types
-    elif isinstance(obj, (str, int, float, bool, list)):
-        return str(obj)
-
-    # Raise an exception for unsupported types
-    else:
-        raise TypeError(f"Unsupported type: {type(obj)}")
-
-
-def json_string_to_object(json_string):
-    # Ensure the input is a string
-    if not isinstance(json_string, str):
-        raise TypeError("Input must be a string")
-
-    # Remove leading and trailing whitespaces
-    json_string = json_string.strip()
-
-    # Check if the JSON string starts and ends with curly braces
-    if json_string[0] == "{" and json_string[-1] == "}":
-        # Split the string into key-value pairs
-        key_value_pairs = json_string[1:-1].split(",")
-
-        # Create a dictionary from key-value pairs
-        result_dict = {}
-        for pair in key_value_pairs:
-            key, value = pair.split(":", 1)
-            result_dict[key.strip(' "')] = value.strip(' "')
-
-        return result_dict
-    else:
-        raise ValueError("Invalid JSON string")
-"""
 
 def customHash(text: str):
     hash = 0
@@ -90,7 +48,7 @@ def find_row(csv_file, search_criteria):
 
     return None  # Return None if the row is not found
 
-def find_rows(csv_file, search_criteria):
+def find_rows(csv_file, search_criteria = None):
     matching_rows = []
 
     with open(csv_file, 'r', newline='') as file:
@@ -100,8 +58,12 @@ def find_rows(csv_file, search_criteria):
         for row in reader:
             # Assuming search_criteria is a dictionary with column names as keys
             # and the corresponding values you are searching for
-            if all(row[header.index(column)] == str(value) for column, value in search_criteria.items()):
+
+            if search_criteria is None: #I just want all tuples
                 matching_rows.append(row)
+            else:
+                if all(row[header.index(column)] == str(value) for column, value in search_criteria.items()):
+                    matching_rows.append(row)
 
     return matching_rows
 

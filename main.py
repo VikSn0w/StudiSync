@@ -1,10 +1,13 @@
 import sys
+from multiprocessing import Process
 
 from PyQt5.QtWidgets import QApplication
 
 from logic.login_logic import LoginLogic
 from logic.students_home_logic import StudentsHomeLogic
 from logic.segreteria_home_logic import SegreteriaHomeLogic
+from combined_multiplex_concurrent_server import server_main
+
 
 def main():
     app = QApplication(sys.argv)
@@ -21,4 +24,7 @@ def main():
 
 
 if __name__ == "__main__":
+    server = Process(target=server_main, args=('127.0.0.1', 5000))
+    server.start()
     main()
+    server.join()

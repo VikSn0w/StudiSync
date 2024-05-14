@@ -14,9 +14,9 @@ MAXLINE = 256
 
 class MyHandler(socketserver.StreamRequestHandler):
     def handle(self):
-        #timeval = time.ctime(time.time())
-        #buffer = f"{timeval}\r\n".encode('utf-8')
-        #full_write(self.request, buffer)
+        # timeval = time.ctime(time.time())
+        # buffer = f"{timeval}\r\n".encode('utf-8')
+        # full_write(self.request, buffer)
 
         host, port = self.client_address
         print(f"Request from host {host}, port {port}")
@@ -69,4 +69,4 @@ def server_main(server_address, server_port):
 
 
 if __name__ == "__main__":
-    server_main("127.0.0.1", 1024)
+    server_main('127.0.0.1', 5000)

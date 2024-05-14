@@ -31,11 +31,11 @@ class LoginLogic(QMainWindow):
 
         if combobox == "Students":
             toSend = {"Matricola": username, "Password": password}
-            result = launchMethod(request_constructor_str(toSend, "StudentsLogin"), "127.0.0.1", 1024)
+            result = launchMethod(request_constructor_str(toSend, "StudentsLogin"), "127.0.0.1", 5000)
 
         elif combobox == "Office":
             toSend = {"Email": username, "Password": password}
-            result = launchMethod(request_constructor_str(toSend, "OfficeLogin"), "127.0.0.1", 1024)
+            result = launchMethod(request_constructor_str(toSend, "OfficeLogin"), "127.0.0.1", 5000)
 
         result = result.replace("\n", "")
         result = result.replace("\r", "")

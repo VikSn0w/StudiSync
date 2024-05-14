@@ -8,7 +8,7 @@ def main(client_ip, server_ip):
         sys.exit(1)
     '''
     ip_address = server_ip
-    port = 1024
+    port = 5000
     recv_size = 1024
 
     sockfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

@@ -1,4 +1,4 @@
-from common.communication import find_row
+from common.communication import find_row, find_rows
 
 
 def default_case():
@@ -9,6 +9,9 @@ def StudentsLogin(payload):
     if result_row:
         if "Password" in payload:
             if str(result_row[4]) == str(payload["Password"]):
+                result_row.append(find_row("db/esami/laurea.csv", search_criteria={"ID": result_row[5]}))
+                print(result_row)
+                result_row.append(find_rows("db/esami/corsi.csv", search_criteria={"CFU": 6}))
                 return result_row
             else:
                 return False

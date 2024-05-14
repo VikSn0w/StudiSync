@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 #from pyqt5_plugins.examplebutton import QtWidgets
 
 from SelMultiplexClient import launchMethod
-from common.communication import customHash, request_constructor_str
+from common.communication import customHash, request_constructor_str, formato_data
 from gui.segreteria_home_gui import Ui_Segreteria_Home
 
 
@@ -15,13 +15,12 @@ class SegreteriaHomeLogic(QMainWindow):
         self.ui = Ui_Segreteria_Home()
         self.ui.setupUi(self)
 
-    def openMainWindow(self):
-        print("open")
-        '''self.main_window = MetaphaseWindow()
-        self.close()
-        self.main_window.show()
-        self.main_window.ui.nameLabel.setText(self.ui.usernameTextField.text())'''
-
+    def showWindow(self, user):
+        self.show()
+        self.user = user
+        self.ui.MtrLabel.setText(user[0])
+        self.ui.NameLastnameLabel.setText(f"{user[1]}, {user[2]}")
+        self.ui.DateLabel.setText(f"{formato_data()}")
 def run(user):
     window = SegreteriaHomeLogic(user)
     window.show()

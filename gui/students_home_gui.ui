@@ -135,7 +135,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="InvioRichiestaButton">
         <property name="text">
          <string>Chiedi alla segreteria se ci siano esami disponibili per un corso</string>
         </property>
@@ -155,7 +155,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="InvioPrenotazioneButton">
         <property name="text">
          <string>Invia una richiesta di prenotazione di un esame alla segreteria</string>
         </property>

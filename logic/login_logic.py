@@ -1,5 +1,7 @@
 import json
 import sys
+
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 # from pyqt5_plugins.examplebutton import QtWidgets
 
@@ -10,6 +12,11 @@ from logic import students_home_logic
 from logic import segreteria_home_logic
 
 class LoginLogic(QMainWindow):
+
+    show_students_home = pyqtSignal()
+    show_office_home = pyqtSignal()
+    user = []
+
     def __init__(self):
         super().__init__()
         self.ui = Ui_Login()
@@ -25,6 +32,7 @@ class LoginLogic(QMainWindow):
         if combobox == "Students":
             toSend = {"Matricola": username, "Password": password}
             result = launchMethod(request_constructor_str(toSend, "StudentsLogin"), "127.0.0.1", 1024)
+
         elif combobox == "Office":
             toSend = {"Email": username, "Password": password}
             result = launchMethod(request_constructor_str(toSend, "OfficeLogin"), "127.0.0.1", 1024)
@@ -44,28 +52,15 @@ class LoginLogic(QMainWindow):
                 print(e)
 
     def openStudentHomeWindow(self, user):
-        self.main_window = students_home_logic.StudentsHomeLogic(user)
+        self.user = json.loads(user)
+        self.show_students_home.emit()
         self.close()
-        user = json.loads(user)
-        print(user)
-        self.main_window.ui.MtrLabel.setText(user[0])
-        self.main_window.ui.NameLastnameLabel.setText(f"{user[1]}, {user[2]}")
-        self.main_window.ui.DateLabel.setText(f"{formato_data()}")
 
-        self.main_window.show()
 
     def openSegreteriaHomeWindow(self, user):
-        self.main_window = segreteria_home_logic.SegreteriaHomeLogic(user)
+        self.user = json.loads(user)
+        self.show_office_home.emit()
         self.close()
-        user = json.loads(user)
-        print(user)
-        self.main_window.ui.MtrLabel.setText(user[0])
-        self.main_window.ui.NameLastnameLabel.setText(f"{user[1]}, {user[2]}")
-        self.main_window.ui.DateLabel.setText(f"{formato_data()}")
-
-        self.main_window.show()
-
-
 
 
 def run():

@@ -90,6 +90,20 @@ def find_row(csv_file, search_criteria):
 
     return None  # Return None if the row is not found
 
+def find_rows(csv_file, search_criteria):
+    matching_rows = []
+
+    with open(csv_file, 'r', newline='') as file:
+        reader = csv.reader(file)
+        header = next(reader)  # Assuming the first row is the header
+
+        for row in reader:
+            # Assuming search_criteria is a dictionary with column names as keys
+            # and the corresponding values you are searching for
+            if all(row[header.index(column)] == str(value) for column, value in search_criteria.items()):
+                matching_rows.append(row)
+
+    return matching_rows
 
 def request_constructor_obj(input_object, header):
     return {

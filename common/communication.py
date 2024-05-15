@@ -67,6 +67,36 @@ def find_rows(csv_file, search_criteria = None):
 
     return matching_rows
 
+def insert_row(data_row, csv_file, custom_id=None):
+
+    if custom_id is not None:
+        new_id = custom_id
+    else:
+        # Determine the last ID in the CSV file and increment it
+        with open(csv_file, 'r') as file:
+            reader = csv.reader(file)
+            last_row = None
+            for row in reader:
+                last_row = row
+            if last_row is None or is_number(last_row[0]) == False:
+                new_id = 1
+            else:
+                new_id = int(last_row[0]) + 1
+
+    # Insert the new row into the CSV file
+    with open(csv_file, 'a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([new_id] + data_row)
+
+    return new_id
+
+def is_number(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
 def request_constructor_obj(input_object, header):
     return {
         "header": header,

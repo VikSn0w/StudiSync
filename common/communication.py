@@ -67,7 +67,7 @@ def find_rows(csv_file, search_criteria = None):
 
     return matching_rows
 
-def insert_row(data_row, csv_file, custom_id=None):
+def insert_row(csv_file, data_row, custom_id=None):
 
     if custom_id is not None:
         new_id = custom_id

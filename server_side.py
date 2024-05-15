@@ -34,21 +34,24 @@ def OfficeLogin(payload):
         return False
 
 def InsertLaurea(payload):
-    result_row = find_row("db/users/laurea.csv", {"ID": payload["Matricola"]})
+
+    result_row = find_row("db/esami/laurea.csv", {"ID": payload["MtrLaurea"]})
     if result_row:
-       return True
+       return {"result": result_row}
     else:
-        insert_row("db/users/laurea.csv", [payload["NomeLaurea"]], custom_id=payload["Matricola"])
+        insert_row("db/esami/laurea.csv", [str(payload["NomeLaurea"])], custom_id=payload["MtrLaurea"])
+        return {"result": "True"}
 
 def GetLauree():
-    result_row = find_rows("db/users/laurea.csv", None)
+    result_row = find_rows("db/esami/laurea.csv", None)
     if result_row:
-        return result_row
+        return {"result": result_row}
     else:
         return False
 
 def InsertCorso(payload):
-    insert_row("db/users/corsi.csv", [payload["CFU"], payload["NomeCorso"]], custom_id=payload[""])
+    insert_row("db/esami/corsi.csv", [payload["CFU"], payload["NomeCorso"], payload["NomeProfessore"], payload["Laurea"]])
+    return {"result": "True"}
 
 def method_switch(method, payload):
     match method:

@@ -1,6 +1,10 @@
+import json
 import sys
 import os
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
+
+from PyQt5.QtCore import QRegExp
+from PyQt5.QtGui import QRegExpValidator
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QDialog
 # from pyqt5_plugins.examplebutton import QtWidgets
 from common.communication import find_rows
 
@@ -9,21 +13,34 @@ from common.communication import customHash, request_constructor_str, formato_da
 from gui.segreteria_dialog_inserisci_laurea_gui import Ui_segreteria_dialog_inserisci_laurea
 
 
-class SegreteriaHomeLogic(QMainWindow):
-    user = None
-    lauree = find_rows("db\\esami\\laurea.csv", None)
-    def __init__(self, user):
-        self.user = user
+class SegreteriaDialogInserisciLaureaLogic(QDialog):
+
+    def __init__(self):
         super().__init__()
         self.ui = Ui_segreteria_dialog_inserisci_laurea()
         self.ui.setupUi(self)
+        reg_ex = QRegExp("[0-9]+")
+        input_validator = QRegExpValidator(reg_ex, self.ui.MtrLaurea)
+        self.ui.MtrLaurea.setValidator(input_validator)
         self.ui.InsertLaureaButton.clicked.connect(self.insertLaureaIntoServer)
+
     def insertLaureaIntoServer(self):
-        return False
-def run(user):
-    window = SegreteriaHomeLogic(user)
-    window.show()
+        toSend = {"MtrLaurea": str(self.ui.MtrLaurea.text()), "NomeLaurea": str(self.ui.NomeLaurea.text())}
+        result = launchMethod(request_constructor_str(toSend, "InsertLaurea"), "127.0.0.1", 5000)
+
+        result = json.loads(result)
+
+        if result["result"] != "True":
+            QMessageBox.critical(None, "Insert - Error",
+                                 f"La laurea inserita è già presente nel database\n{result['result'][0]} - {result['result'][1]}")
+        else:
+            QMessageBox.information(None, "Insert - Success",
+                                 f"La laurea inserita correttamente")
+
+def run():
+    dialog = SegreteriaDialogInserisciLaureaLogic()
+    dialog.exec_()
 
 
 if __name__ == "__main__":
-    run('["0124002584", "Vittorio", "Picone", "vittorio.picone001@studenti.uniparthenope.it", "1914752590"]')
+    run()

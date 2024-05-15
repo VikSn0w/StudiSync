@@ -32,10 +32,6 @@ class StudentsHomeLogic(QMainWindow):
         self.ui_dialog.setupUi(self.dialog)
         self.ui_dialog.CorsoLaureaLabel.setText(f"{self.user[6][0]} - {self.user[6][1]}")
 
-        items = self.user[7]
-        for item in items:
-            self.ui_dialog.comboBox.addItem(f"{item[0]} - {item[2]} - {item[1]} CFU")
-            self.ui_dialog.comboBox.setItemData(self.ui_dialog.comboBox.count() - 1, int(item[0]))
         self.dialog.exec_()
 
 def run(user):

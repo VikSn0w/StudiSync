@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>846</width>
+    <width>855</width>
     <height>413</height>
    </rect>
   </property>
@@ -41,7 +41,6 @@
          <font>
           <family>Segoe UI</family>
           <pointsize>12</pointsize>
-          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -108,7 +107,6 @@
          <font>
           <family>Segoe UI</family>
           <pointsize>12</pointsize>
-          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -140,7 +138,7 @@
       <item row="2" column="0">
        <widget class="QPushButton" name="DateDiposnibiliEsami">
         <property name="text">
-         <string>Fornisci allo studente le date degli esami disponibili per l'esame scelto dallo studente</string>
+         <string>Fornisci allo studente gli appelli disponibili per l'esame scelto dallo studente</string>
         </property>
        </widget>
       </item>

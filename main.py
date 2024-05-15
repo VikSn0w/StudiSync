@@ -1,3 +1,6 @@
+import os
+import platform
+import subprocess
 import sys
 from multiprocessing import Process
 
@@ -20,11 +23,13 @@ def main():
 
     login_window.show()
 
-    sys.exit(app.exec_())
-
+    app.exec_()
 
 if __name__ == "__main__":
     server = Process(target=server_main, args=('127.0.0.1', 5000))
     server.start()
     main()
-    server.join()
+    server.kill()
+
+
+

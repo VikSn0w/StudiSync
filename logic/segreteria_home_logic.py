@@ -9,8 +9,8 @@ from common.communication import customHash, request_constructor_str, formato_da
 from gui.segreteria_home_gui import Ui_Segreteria_Home
 from logic.segreteria_dialog_inserisci_laurea_logic import SegreteriaDialogInserisciLaureaLogic
 from logic.segreteria_dialog_inserisci_esame_logic import SegreteriaDialogInserisciEsameLogic
-
-
+from logic.segreteria_dialog_inoltra_prenotazione_logic import SegreteriaDialogInoltraPrenotazioneLogic
+from logic.segreteria_dialog_fornisci_date_logic import SegreteriaDialogFornisciDateLogic
 class SegreteriaHomeLogic(QMainWindow):
     user = None
     lauree = find_rows("db\\esami\\laurea.csv", None)
@@ -21,6 +21,8 @@ class SegreteriaHomeLogic(QMainWindow):
         self.ui.setupUi(self)
         self.ui.InserimentoLaureaButton.clicked.connect(self.showDialogInserimentoLaurea)
         self.ui.InserimentoEsamiButton.clicked.connect(self.showDialogInserimentoEsame)
+        self.ui.DateDiposnibiliEsami.clicked.connect(self.showDialogFornisciDate)
+        self.ui.InoltraRichiestaButton.clicked.connect(self.showDialogInoltraPrenotazione)
 
 
     def showWindow(self, user):
@@ -39,6 +41,13 @@ class SegreteriaHomeLogic(QMainWindow):
         dialog = SegreteriaDialogInserisciEsameLogic()
         dialog.exec_()
 
+    def showDialogInoltraPrenotazione(self):
+        dialog = SegreteriaDialogInoltraPrenotazioneLogic()
+        dialog.exec_()
+
+    def showDialogFornisciDate(self):
+        dialog = SegreteriaDialogFornisciDateLogic()
+        dialog.exec_()
 
 
 def run(user):

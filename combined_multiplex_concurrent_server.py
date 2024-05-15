@@ -41,6 +41,7 @@ class MyHandler(socketserver.StreamRequestHandler):
                 # Use blocking send to ensure the response is fully sent before closing
                 sent = full_write(self.request, response)
                 print(f"Sent {sent}")
+
             except socket.error as e:
                 if e.errno == 10054:
                     print(f"Connection forcibly closed by the remote host {self.client_address}")

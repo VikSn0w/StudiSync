@@ -113,7 +113,7 @@ class Ui_InoltraPrenotazione(object):
         self.label_9.setText(_translate("InoltraPrenotazione", "Matricola"))
         self.label_10.setText(_translate("InoltraPrenotazione", "Data Richiesta"))
         self.label_11.setText(_translate("InoltraPrenotazione", "Nome"))
-        self.label_12.setText(_translate("InoltraPrenotazione", "Congome"))
+        self.label_12.setText(_translate("InoltraPrenotazione", "Cognome"))
         self.label_13.setText(_translate("InoltraPrenotazione", "Data Appello"))
         self.label.setText(_translate("InoltraPrenotazione", "Corso"))
         self.label_14.setText(_translate("InoltraPrenotazione", "Azione"))

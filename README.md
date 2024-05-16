@@ -22,19 +22,19 @@ Scrivere un'applicazione client/server parallelo per gestire gli esami universit
 ## Roadmap
 ### Backend
 1. [x] Base client-server
-2. [ ] DB della piattaforma 
+2. [x] DB della piattaforma 
 3. [x] Login differenziato Studente-Segreteria
-4. [ ] **Segreteria**
-   1. [ ] Inserimento esami
-   2. [ ] Inserimento richiesta di prenotazione esami
-   3. [ ] Fetch delle date disponibili per l'esame scelto
+4. [x] **Segreteria**
+   1. [x] Inserimento esami
+   2. [x] Inserimento richiesta di prenotazione esami
+   3. [x] Fetch delle date disponibili per l'esame scelto
 5. [ ] **Studente**
    1. [ ] Richiesta di date disponibili per un corso
    2. [ ] Invio richieste di prenotazione alla segreteria
 6. **Server universitario**
-   1. [ ] Riceve l'aggiunta di nuovi esami
-   2. [ ] Riceve la prenotazione di un esame
-   3. [ ] Ad ogni richiesta di prenotazione invia alla segreteria il numero di prenotazione progressivo assegnato allo studente e la segreteria a sua volta lo inoltra allo studente
+   1. [x] Riceve l'aggiunta di nuovi esami
+   2. [x] Riceve la prenotazione di un esame
+   3. [x] Ad ogni richiesta di prenotazione invia alla segreteria il numero di prenotazione progressivo assegnato allo studente e la segreteria a sua volta lo inoltra allo studente
 
 ### GUI
 1. [x] GUI Login

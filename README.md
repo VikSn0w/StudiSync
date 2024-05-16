@@ -4,6 +4,7 @@ Traccia - Università
 
 Scrivere un'applicazione client/server parallelo per gestire gli esami universitari
 
+Linguaggio: ![Python Badge](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff&style=for-the-badge)
 
 ## Segreteria
 1. Inserisce gli esami sul server dell'università (salvare in un file o conservare in memoria il dato)

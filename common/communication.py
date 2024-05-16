@@ -90,6 +90,33 @@ def insert_row(csv_file, data_row, custom_id=None):
 
     return new_id
 
+
+def update_row(csv_file:str, row_id:str, column_name:str, new_value:str):
+    # Read the CSV file and store its contents in a list of dictionaries
+    with open(csv_file, 'r') as file:
+        csv_reader = csv.DictReader(file)
+        rows = list(csv_reader)
+
+    # Find the row with the given ID
+    for row in rows:
+        if row['ID'] == row_id:
+            # Update the value in the specified column
+            row[column_name] = new_value
+            break
+    else:
+        print(f"Row with ID {row_id} not found.")
+        return
+
+    # Write the updated contents back to the CSV file
+    with open(csv_file, 'w', newline='') as file:
+        fieldnames = csv_reader.fieldnames
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+
+    print(f"Value in row {row_id}, column {column_name} updated to {new_value}.")
+
+
 def is_number(s):
     try:
         int(s)

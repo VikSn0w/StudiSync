@@ -19,15 +19,9 @@ class SegreteriaDialogInoltraPrenotazioneLogic(QDialog):
         super().__init__()
         self.ui = Ui_InoltraPrenotazione()
         self.ui.setupUi(self)
-        rows = find_rows("..\\db\\prenotazioni\\richieste.csv")
-        for r in rows:
-            for elem in r:
-                newlabel = QLabel(elem)
-                self.ui.gridLayout.addWidget(newlabel)
-            newButton = QPushButton("Approva")
-            self.ui.gridLayout.addWidget(newButton)
-            newButton = QPushButton("Declina")
-            self.ui.gridLayout.addWidget(newButton)
+
+
+
 
 
 

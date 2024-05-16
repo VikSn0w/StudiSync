@@ -29,13 +29,13 @@ class SegreteriaDialogInserisciEsameLogic(QDialog):
     def insertEsameIntoServer(self):
         selected_index = self.ui.comboBoxLaurea.currentIndex()
         item_data = self.ui.comboBoxLaurea.itemData(selected_index)
-        toSend = {"CFU": str(self.ui.CFUSpinBox.text()), "NomeCorso": str(self.ui.NomeEsameField.text()), "NomeProfessore": str(self.ui.NomeProfessoreField.text()), "Laurea":str(item_data)}
+        toSend = {"CFU": str(self.ui.CFUSpinBox.text()), "NomeCorso": str(self.ui.NomeEsameField.text()), "IdCorso": str(self.ui.IDEsame.text()).upper(), "NomeProfessore": str(self.ui.NomeProfessoreField.text()), "Laurea":str(item_data)}
         result = launchMethod(request_constructor_str(toSend, "InsertCorso"), "127.0.0.1", 5000)
         result = json.loads(result)
 
         if result["result"] != "True":
             QMessageBox.critical(None, "Insert - Error",
-                                 f"La laurea inserita è già presente nel database\n{result['result'][0]} - {result['result'][1]}")
+                                 f"L'esame inserito è già presente nel database\n{result['result'][0]} - {result['result'][1]} - {result['result'][2]} - {result['result'][3]} - {result['result'][4]}")
         else:
             QMessageBox.information(None, "Insert - Success",
                                  f"Esame Inserito correttamente")

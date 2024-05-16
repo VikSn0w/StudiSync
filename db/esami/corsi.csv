@@ -1,7 +1,9 @@
 ID,CFU,Nome,Professore,Laurea
-1,6,MAT1,Luigi D'Onofrio,0124
-2,6,PROG1,Angelo Ciaramella,0124
-3,6,PROG2,Angelo Ciaramella,0124
-4,6,PROG3,Angelo Ciaramella,0124
-5,12,ASD,Alessio Ferone,0124
-6,9,RetiDiCalcolatori,E. Di Nardo,0124
+MAT1,6,Matematica 1,Luigi D'Onofrio,0124
+PROG1,6,Programmazione 1,Angelo Ciaramella,0124
+PROG2,6,Programmazione 2,Angelo Ciaramella,0124
+PROG3,6,Programmazione 3,Angelo Ciaramella,0124
+ASD,12,Algoritmi e Strutture Dati,Alessio Ferone,0124
+RET,9,Reti Di Calcolatori,E. Di Nardo,0124
+CALC,6,Calcolo Numerico,Giulio Giunta,0124
+MAT2,9,Matematica 2,Bruno Volzone,0124

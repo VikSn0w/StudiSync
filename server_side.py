@@ -5,9 +5,8 @@ from common.communication import find_row, find_rows, insert_row, update_row
 ROOT_DIR = os.path.abspath(os.curdir)
 
 DB = {
-    "PRENOTAZIONI_ESAMI": os.path.join(ROOT_DIR, 'db', 'prenotazioni', 'prenotazioniEsame.csv'),
     "RICHIESTE_DATE_ESAMI": os.path.join(ROOT_DIR, 'db', 'prenotazioni', 'richiesteDateEsami.csv'),
-    "RICHIESTE_PRENOTAZIONI_ESAMI": os.path.join(ROOT_DIR, 'db', 'prenotazioni', 'richiestePrenotazioniEsami.csv'),
+    "RICHIESTE_PRENOTAZIONI_ESAMI": os.path.join(ROOT_DIR, 'db', 'prenotazioni', 'richiestePrenotazioneEsami.csv'),
     "CORSI": os.path.join(ROOT_DIR, 'db', 'esami', 'corsi.csv'),
     "APPELLI": os.path.join(ROOT_DIR, 'db', 'esami', 'appelli.csv'),
     "LAUREA": os.path.join(ROOT_DIR, 'db', 'esami', 'laurea.csv'),
@@ -24,6 +23,14 @@ def GetStudente(payload):
         return {"result":result_row}
     else:
         return {"result":"false"}
+
+def GetAppello(payload):
+    result_row = find_row(DB["APPELLI"], {"ID": payload["ID"]})
+    if result_row:
+        return {"result":result_row}
+    else:
+        return {"result":"false"}
+
 
 def StudentsLogin(payload):
     result_row = find_row(DB["STUDENTI"], {"Matricola": payload["Matricola"]})
@@ -102,8 +109,40 @@ def GetRichiesteDateEsamiNonEvase():
     else:
         return {"result": "false"}
 
+def GetRichiestePrenotazioniAppelliNonEvase():
+    result_row = find_rows(DB["RICHIESTE_PRENOTAZIONI_ESAMI"], {"isAccettata": "?"})
+    if result_row:
+        final_row = []
+        for row in result_row:
+            tmp = []
+            tmp.append(row[0])
+            tmp.append(row[1])
+            tmp.append(row[3])
+            studente = GetStudente({"Matricola":row[1]})
+            if studente["result"] != "false":
+                tmp.append(studente["result"][1])
+                tmp.append(studente["result"][2])
+            else:
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+            appello = GetAppello({"ID": row[2]})
+            if appello["result"] != "false":
+                tmp.append(appello["result"][1])
+                tmp.append(appello["result"][2])
+            else:
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+            final_row.append(tmp)
+        return {"result": final_row}
+    else:
+        return {"result": "false"}
+
 def AggiornaRichiestaData(payload):
     update_row(csv_file=DB["RICHIESTE_DATE_ESAMI"], row_id=payload["ID"], column_name="isAccettata", new_value=payload["isAccettata"])
+    return {"result": "OK"}
+
+def AggiornaRichiesteAppelli(payload):
+    update_row(csv_file=DB["RICHIESTE_PRENOTAZIONI_ESAMI"], row_id=payload["ID"], column_name="isAccettata", new_value=payload["isAccettata"])
     return {"result": "OK"}
 
 def method_switch(method, payload):
@@ -125,8 +164,14 @@ def method_switch(method, payload):
         case "GetRichiesteDateEsamiNonEvase":
             return GetRichiesteDateEsamiNonEvase()
 
+        case "GetRichiestePrenotazioniAppelliNonEvase":
+            return GetRichiestePrenotazioniAppelliNonEvase()
+
         case "AggiornaRichiestaData":
             return AggiornaRichiestaData(payload)
+
+        case "AggiornaRichiesteAppelli":
+            return AggiornaRichiesteAppelli(payload)
 
         case _:
             return default_case()

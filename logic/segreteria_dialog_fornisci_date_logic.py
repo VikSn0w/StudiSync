@@ -32,6 +32,7 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
         if rows["result"] == "false":
             QMessageBox.information(None, "Attenzione",
                                     f"Nessuna richiesta disponibile")
+            self.data = None
         else:
             if self.data == None:
                 for r in rows["result"]:

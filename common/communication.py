@@ -67,6 +67,35 @@ def find_rows(csv_file, search_criteria = None):
 
     return matching_rows
 
+
+import csv
+
+
+def find_rows_v2(csv_file, search_criteria=None):
+    matching_rows = []
+
+    with open(csv_file, 'r', newline='') as file:
+        reader = csv.reader(file)
+        header = next(reader)  # Assuming the first row is the header
+
+        for row in reader:
+            if search_criteria is None:  # I just want all tuples
+                matching_rows.append(row)
+            else:
+                # Check if the row matches all criteria
+                match = True
+                for column, values in search_criteria.items():
+                    column_index = header.index(column)
+                    if not any(row[column_index] == str(value) for value in values):
+                        match = False
+                        break
+
+                if match:
+                    matching_rows.append(row)
+
+    return matching_rows
+
+
 def insert_row(csv_file, data_row, custom_id=None):
 
     if custom_id is not None:
@@ -151,3 +180,18 @@ def formato_data():
     # Costruisci la stringa con il formato richiesto
     data_formattata = f"{giorno_settimana} {giorno_mese} {mese} {anno}"
     return data_formattata
+
+def get_current_date():
+    current_date = datetime.datetime.now()
+    return current_date.strftime("%d-%m-%Y")
+
+def filter_dates_after_current(dates):
+    current_date = datetime.datetime.now()
+    matching_rows = []
+
+    for row in dates:
+        row_date = datetime.datetime.strptime(row[1], "%d-%m-%Y %H:%M:%S")
+        if row_date > current_date:
+            matching_rows.append(row)
+
+    return matching_rows

@@ -1,4 +1,5 @@
 import csv
+import json
 import os
 
 ROOT_DIR = os.path.abspath(os.curdir)
@@ -41,4 +42,5 @@ def update_row(csv_file:str, row_id:str, column_name:str, new_value:str):
     print(f"Value in row {row_id}, column {column_name} updated to {new_value}.")
 
 if __name__ == '__main__':
-    update_row(DB["RICHIESTE_DATE_ESAMI"], "2", "isAccettata", "1")
+    ciao = json.loads('{"dates": [["2", "11-06-2024 09:00:00", "MAT1"], ["3", "10-06-2024 09:00:00", "MAT1"], ["4", "12-06-2024 09:00:00", "MAT1"]]}')
+    print(ciao)

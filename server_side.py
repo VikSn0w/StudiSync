@@ -1,6 +1,7 @@
+import json
 import os
 
-from common.communication import find_row, find_rows, insert_row, update_row
+from common.communication import find_row, find_rows, insert_row, update_row, find_rows_v2, filter_dates_after_current
 
 ROOT_DIR = os.path.abspath(os.curdir)
 
@@ -94,8 +95,23 @@ def InsertCorso(payload):
         return {"result": "True"}
 
 
+def GetRichiesteDateEsamiByMatricola(payload):
+    result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
+    if result_row:
+        final_row = []
+        for row in result_row:
+            tmp = []
+            tmp.append(row[0])
+            tmp.append(row[2])
+            tmp.append(row[3])
+            tmp.append(row[4])
+            final_row.append(tmp)
+        return {"result": final_row}
+    else:
+        return {"result": "false"}
+
 def GetRichiesteDateEsamiNonEvase():
-    result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"isAccettata": "0"})
+    result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"isAccettata": "?"})
     if result_row:
         final_row = []
         for row in result_row:
@@ -146,9 +162,18 @@ def GetRichiestePrenotazioniAppelliNonEvase():
         return {"result": "false"}
 
 
-def AggiornaRichiestaData(payload):
-    update_row(csv_file=DB["RICHIESTE_DATE_ESAMI"], row_id=payload["ID"], column_name="isAccettata",
-               new_value=payload["isAccettata"])
+def AggiornaRichiestaDate(payload):
+    jsonToSend = {}
+
+    if payload["isAccettata"] == "1":
+        richiesta = find_row(DB["RICHIESTE_DATE_ESAMI"], {"ID": payload["ID"]})
+        date_appelli = find_rows(DB["APPELLI"], search_criteria={"Corso":richiesta[2]})
+        date_appelli = filter_dates_after_current(date_appelli)
+        jsonToSend = {"dates": date_appelli}
+
+    jsonToSend = str(jsonToSend)
+    update_row(csv_file=DB["RICHIESTE_DATE_ESAMI"], row_id=payload["ID"], column_name="isAccettata", new_value=payload["isAccettata"])
+    update_row(csv_file=DB["RICHIESTE_DATE_ESAMI"], row_id=payload["ID"], column_name="DateFornite", new_value=f'{jsonToSend}')
     return {"result": "OK"}
 
 
@@ -165,11 +190,10 @@ def GetCorsi():
     else:
         return {"result": "not found"}
 
-
-def PutDataRequest(payload):
+def PutDataRichiestaDate(payload):
     try:
         insert_row(csv_file=DB["RICHIESTE_DATE_ESAMI"],
-               data_row=[payload["MatricolaRichiedente"], payload["EsameRichiesto"], 0, '{}'])
+               data_row=[payload["MatricolaRichiedente"], payload["EsameRichiesto"], "?", '{}'])
         return {"result": "OK"}
     except Exception as e:
         return {"result": f"Not OK error: {e}"}
@@ -199,14 +223,17 @@ def method_switch(method, payload):
         case "GetRichiestePrenotazioniAppelliNonEvase":
             return GetRichiestePrenotazioniAppelliNonEvase()
 
-        case "AggiornaRichiestaData":
-            return AggiornaRichiestaData(payload)
+        case "AggiornaRichiestaDate":
+            return AggiornaRichiestaDate(payload)
 
         case "AggiornaRichiesteAppelli":
             return AggiornaRichiesteAppelli(payload)
 
-        case "PutDataRequest":
-            return PutDataRequest(payload)
+        case "PutDataRichiestaDate":
+            return PutDataRichiestaDate(payload)
+
+        case "GetRichiesteDateEsamiByMatricola":
+            return GetRichiesteDateEsamiByMatricola(payload)
 
         case _:
             return default_case()

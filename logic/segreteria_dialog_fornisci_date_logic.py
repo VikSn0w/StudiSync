@@ -48,10 +48,11 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
     def createRow(self, data):
         layout = QHBoxLayout()
 
-        if not int(data[3]):  # Se non è stato elaborato
-            del data[3]
-            for d in data[1:]:
-                layout.addWidget(QLabel(d))
+        print(data)
+
+        del data[3]
+        for d in data[1:]:
+            layout.addWidget(QLabel(d))
 
         button_layout = QVBoxLayout()
 
@@ -69,7 +70,7 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
         self.ui.TableView.addLayout(layout)
 
     def Fornisci(self, ID:str):
-        row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"1"}, "AggiornaRichiestaData"), "127.0.0.1", 5000)
+        row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"1"}, "AggiornaRichiestaDate"), "127.0.0.1", 5000)
         row = json.loads(row)
 
         QMessageBox.information(None, "Accept - Success","Richiesta accetta con successo")

@@ -27,9 +27,9 @@ def main():
 
 if __name__ == "__main__":
     server = Process(target=server_main, args=('127.0.0.1', 5000))
-    server.start()
+    #server.start()
     main()
-    server.kill()
+    #server.kill()
 
 
 

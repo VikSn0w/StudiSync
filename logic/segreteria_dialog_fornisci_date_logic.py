@@ -11,14 +11,14 @@ from common.communication import find_rows
 
 from SelMultiplexClient import launchMethod
 from common.communication import customHash, request_constructor_str, formato_data
-from gui.segreteria_dialog_fornisci_date import Ui_InoltraPrenotazione
+from gui.segreteria_dialog_fornisci_date import Ui_FornisciDate
 
 
 class SegreteriaDialogFornisciDateLogic(QDialog):
 
     def __init__(self):
         super().__init__()
-        self.ui = Ui_InoltraPrenotazione()
+        self.ui = Ui_FornisciDate()
         self.ui.setupUi(self)
         self.ui.AggiornaButton.clicked.connect(self.aggiornaRichieste)
         self.data = None
@@ -28,7 +28,8 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
     def aggiornaRichieste(self):
         rows = launchMethod(request_constructor_str({}, "GetRichiesteDateEsamiNonEvase"), "127.0.0.1", 5000)
         rows = json.loads(rows)
-        print(rows)
+
+        #print(rows)
         if rows["result"] == "false":
             QMessageBox.information(None, "Attenzione",
                                     f"Nessuna richiesta disponibile")
@@ -47,13 +48,15 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
     def createRow(self, data):
         layout = QHBoxLayout()
 
-        for d in data[1:]:
-            layout.addWidget(QLabel(d))
+        if not int(data[3]):  # Se non è stato elaborato
+            del data[3]
+            for d in data[1:]:
+                layout.addWidget(QLabel(d))
 
         button_layout = QVBoxLayout()
 
-        newButton_approve = QPushButton("Approva")
-        newButton_approve.clicked.connect(lambda: self.accettaRichiesta(data[0]))
+        newButton_approve = QPushButton("Fornisci Date")
+        newButton_approve.clicked.connect(lambda: self.Fornisci(data[0]))
         button_layout.addWidget(newButton_approve)
 
         newButton_decline = QPushButton("Declina")
@@ -65,7 +68,7 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
         # Set the layout of the widget
         self.ui.TableView.addLayout(layout)
 
-    def accettaRichiesta(self, ID:str):
+    def Fornisci(self, ID:str):
         row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"1"}, "AggiornaRichiestaData"), "127.0.0.1", 5000)
         row = json.loads(row)
 

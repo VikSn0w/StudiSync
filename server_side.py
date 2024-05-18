@@ -14,22 +14,25 @@ DB = {
     "STUDENTI": os.path.join(ROOT_DIR, 'db', 'users', 'students.csv')
 }
 
+
 def default_case():
     return "Method not implemented"
+
 
 def GetStudente(payload):
     result_row = find_row(DB["STUDENTI"], {"Matricola": payload["Matricola"]})
     if result_row:
-        return {"result":result_row}
+        return {"result": result_row}
     else:
-        return {"result":"false"}
+        return {"result": "false"}
+
 
 def GetAppello(payload):
     result_row = find_row(DB["APPELLI"], {"ID": payload["ID"]})
     if result_row:
-        return {"result":result_row}
+        return {"result": result_row}
     else:
-        return {"result":"false"}
+        return {"result": "false"}
 
 
 def StudentsLogin(payload):
@@ -48,6 +51,7 @@ def StudentsLogin(payload):
     else:
         return False
 
+
 def OfficeLogin(payload):
     result_row = find_row(DB["SEGRETERIA"], {"Email": payload["Email"]})
     if result_row:
@@ -61,14 +65,15 @@ def OfficeLogin(payload):
     else:
         return False
 
-def InsertLaurea(payload):
 
+def InsertLaurea(payload):
     result_row = find_row(DB["LAUREA"], {"ID": payload["MtrLaurea"]})
     if result_row:
-       return {"result": result_row}
+        return {"result": result_row}
     else:
         insert_row(DB["LAUREA"], [str(payload["NomeLaurea"])], custom_id=payload["MtrLaurea"])
         return {"result": "True"}
+
 
 def GetLauree():
     result_row = find_rows(DB["LAUREA"], None)
@@ -76,6 +81,7 @@ def GetLauree():
         return {"result": result_row}
     else:
         return False
+
 
 def InsertCorso(payload):
     result_row = find_row(DB["CORSI"], {"ID": payload["IdCorso"]})
@@ -87,8 +93,9 @@ def InsertCorso(payload):
                    custom_id=payload["IdCorso"])
         return {"result": "True"}
 
+
 def GetRichiesteDateEsamiNonEvase():
-    result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"isAccettata": "?"})
+    result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"isAccettata": "0"})
     if result_row:
         final_row = []
         for row in result_row:
@@ -97,7 +104,7 @@ def GetRichiesteDateEsamiNonEvase():
             tmp.append(row[1])
             tmp.append(row[2])
             tmp.append(row[3])
-            studente = GetStudente({"Matricola":row[1]})
+            studente = GetStudente({"Matricola": row[1]})
             if studente["result"] != "false":
                 tmp.append(studente["result"][1])
                 tmp.append(studente["result"][2])
@@ -109,6 +116,7 @@ def GetRichiesteDateEsamiNonEvase():
     else:
         return {"result": "false"}
 
+
 def GetRichiestePrenotazioniAppelliNonEvase():
     result_row = find_rows(DB["RICHIESTE_PRENOTAZIONI_ESAMI"], {"isAccettata": "?"})
     if result_row:
@@ -118,7 +126,7 @@ def GetRichiestePrenotazioniAppelliNonEvase():
             tmp.append(row[0])
             tmp.append(row[1])
             tmp.append(row[3])
-            studente = GetStudente({"Matricola":row[1]})
+            studente = GetStudente({"Matricola": row[1]})
             if studente["result"] != "false":
                 tmp.append(studente["result"][1])
                 tmp.append(studente["result"][2])
@@ -137,13 +145,34 @@ def GetRichiestePrenotazioniAppelliNonEvase():
     else:
         return {"result": "false"}
 
+
 def AggiornaRichiestaData(payload):
-    update_row(csv_file=DB["RICHIESTE_DATE_ESAMI"], row_id=payload["ID"], column_name="isAccettata", new_value=payload["isAccettata"])
+    update_row(csv_file=DB["RICHIESTE_DATE_ESAMI"], row_id=payload["ID"], column_name="isAccettata",
+               new_value=payload["isAccettata"])
     return {"result": "OK"}
 
+
 def AggiornaRichiesteAppelli(payload):
-    update_row(csv_file=DB["RICHIESTE_PRENOTAZIONI_ESAMI"], row_id=payload["ID"], column_name="isAccettata", new_value=payload["isAccettata"])
+    update_row(csv_file=DB["RICHIESTE_PRENOTAZIONI_ESAMI"], row_id=payload["ID"], column_name="isAccettata",
+               new_value=payload["isAccettata"])
     return {"result": "OK"}
+
+
+def GetCorsi():
+    corsi = find_rows(DB["CORSI"])
+    if len(corsi) > 0:
+        return {"result": corsi}
+    else:
+        return {"result": "not found"}
+
+
+def PutDataRequest(payload):
+    try:
+        insert_row(csv_file=DB["RICHIESTE_DATE_ESAMI"],
+               data_row=[payload["MatricolaRichiedente"], payload["EsameRichiesto"], 0, '{}'])
+        return {"result": "OK"}
+    except Exception as e:
+        return {"result": f"Not OK error: {e}"}
 
 def method_switch(method, payload):
     match method:
@@ -157,6 +186,9 @@ def method_switch(method, payload):
             return InsertLaurea(payload)
         case "GetLauree":
             return GetLauree()
+
+        case "GetCorsi":
+            return GetCorsi()
 
         case "InsertCorso":
             return InsertCorso(payload)
@@ -173,6 +205,8 @@ def method_switch(method, payload):
         case "AggiornaRichiesteAppelli":
             return AggiornaRichiesteAppelli(payload)
 
+        case "PutDataRequest":
+            return PutDataRequest(payload)
+
         case _:
             return default_case()
-

@@ -1,3 +1,4 @@
-ID,matricolaRichiedente,esameRichiesto,dataOra,isAccettata
-1,0124002612,MAT1,10/06/2024 09:00:00,1
-2,0124002584,CALC,12/06/2024 11:30:00,1
+ID,matricolaRichiedente,esameRichiesto,isAccettata,DateForniteFornite
+1,0124002584,CALC ,0,{}
+2,a,MAT2,0,{}
+2,a,MAT1,1,{}

@@ -64,7 +64,7 @@ class Ui_Invio_Richiesta_Date_Esami(object):
         font = QtGui.QFont()
         font.setPointSize(12)
         self.comboBox.setFont(font)
-        self.comboBox.setObjectName("comboBox")
+        self.comboBox.setObjectName("comboBoxEsami")
         self.horizontalLayout.addWidget(self.comboBox)
         self.verticalLayout.addLayout(self.horizontalLayout)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
@@ -86,6 +86,7 @@ class Ui_Invio_Richiesta_Date_Esami(object):
         self.CorsoLaureaLabel.setText(_translate("Invio_Richiesta_Date_Esami", "0124 - Informatica"))
         self.label.setText(_translate("Invio_Richiesta_Date_Esami", "Seleziona Corso:"))
         self.InviaRichiestaButton.setText(_translate("Invio_Richiesta_Date_Esami", "Invia Richiesta"))
+
 
 
 if __name__ == "__main__":

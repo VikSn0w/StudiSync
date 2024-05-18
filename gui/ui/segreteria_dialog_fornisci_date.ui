@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>InoltraPrenotazione</class>
- <widget class="QDialog" name="InoltraPrenotazione">
+ <class>FornisciDate</class>
+ <widget class="QDialog" name="FornisciDate">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -21,7 +21,6 @@
        <property name="font">
         <font>
          <pointsize>16</pointsize>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -69,7 +68,7 @@
         <x>0</x>
         <y>0</y>
         <width>409</width>
-        <height>404</height>
+        <height>401</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -79,7 +78,6 @@
           <widget class="QLabel" name="label_3">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -92,7 +90,6 @@
           <widget class="QLabel" name="label_2">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -102,23 +99,9 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Data</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QLabel" name="label_5">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -131,7 +114,6 @@
           <widget class="QLabel" name="label_6">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -144,7 +126,6 @@
           <widget class="QLabel" name="label_7">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>

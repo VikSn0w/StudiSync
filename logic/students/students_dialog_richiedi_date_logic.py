@@ -1,11 +1,12 @@
 import json
+import os
 import re
 
 from PyQt5.QtWidgets import QMessageBox, QDialog, QHBoxLayout, QLabel, QPushButton
 # from pyqt5_plugins.examplebutton import QtWidgets
 
 from SelMultiplexClient import launchMethod
-from common.communication import request_constructor_str
+from common.communication import request_constructor_str, loadJSONFromFile
 from gui.students.students_dialog_invio_richiesta_date_esami_gui import Ui_Invio_Richiesta_Date_Esami
 from logic.students.students_dialog_seleziona_appello_logic import StudentsDialogRichiestaPrenotazioneLogic
 
@@ -14,11 +15,13 @@ class StudentsDialogRichiestaDateLogic(QDialog):
 
     def __init__(self,user):
         super().__init__()
+        ROOT_DIR = os.path.abspath(os.curdir)
+        server_coords = loadJSONFromFile(os.path.join(ROOT_DIR, "server_address.json"))
         self.user = user
         self.ui = Ui_Invio_Richiesta_Date_Esami()
         self.ui.setupUi(self)
         self.ui.CorsoLaureaLabel.setText(f"{self.user[6][0]} - {self.user[6][1]}")
-        corsi = json.loads(launchMethod(request_constructor_str(None, "GetCorsi"), "127.0.0.1", 5000))
+        corsi = json.loads(launchMethod(request_constructor_str(None, "GetCorsi"), server_coords['address'], server_coords['port']))
         corsi = corsi['result']
         for c in corsi:
             if str(c[4]) == str(self.user[6][0]):
@@ -34,7 +37,9 @@ class StudentsDialogRichiestaDateLogic(QDialog):
 
     def aggiornaStorico(self):
         payload = {"Matricola": self.user[0]}
-        rows = json.loads(launchMethod(request_constructor_str(payload, "GetRichiesteDateEsamiByMatricola"), "127.0.0.1", 5000))
+        ROOT_DIR = os.path.abspath(os.curdir)
+        server_coords = loadJSONFromFile(os.path.join(ROOT_DIR, "server_address.json"))
+        rows = json.loads(launchMethod(request_constructor_str(payload, "GetRichiesteDateEsamiByMatricola"), server_coords['address'], server_coords['port']))
 
         print(rows)
         if rows["result"] == "false":
@@ -59,7 +64,9 @@ class StudentsDialogRichiestaDateLogic(QDialog):
         selected = selected.group(1)
         payload = {"EsameRichiesto": selected, "MatricolaRichiedente": self.user[0]}
         print(f"Payload: {payload}")
-        result = launchMethod(request_constructor_str(payload, "PutDataRichiestaDate"), "127.0.0.1", 5000)
+        ROOT_DIR = os.path.abspath(os.curdir)
+        server_coords = loadJSONFromFile(os.path.join(ROOT_DIR, "server_address.json"))
+        result = launchMethod(request_constructor_str(payload, "PutDataRichiestaDate"), server_coords['address'], server_coords['port'])
         result = json.loads(result)
         if result['result'] == "OK":
             QMessageBox.information(None, "Accept - Success", "Richiesta Inviata con successo")

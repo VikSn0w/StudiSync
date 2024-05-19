@@ -1,11 +1,12 @@
 import json
+import os
 import re
 
 from PyQt5.QtWidgets import QMessageBox, QDialog, QHBoxLayout, QLabel, QPushButton
 # from pyqt5_plugins.examplebutton import QtWidgets
 
 from SelMultiplexClient import launchMethod
-from common.communication import request_constructor_str
+from common.communication import request_constructor_str, loadJSONFromFile
 from gui.students.students_dialog_select_appello import Ui_student_dialog_select_appello
 
 
@@ -29,7 +30,10 @@ class StudentsDialogRichiestaPrenotazioneLogic(QDialog):
     def inviaRichiesta(self,data):
         payload = {"ID_Richiesta":self.data['id_request'], "ID_Appello": data[0], "MatricolaRichiedente": self.user[0]}
         print(f"Payload: {payload}")
-        result = launchMethod(request_constructor_str(payload, "PutDataRichiestaPrenotazione"), "127.0.0.1", 5000)
+        ROOT_DIR = os.path.abspath(os.curdir)
+        server_coords = loadJSONFromFile(os.path.join(ROOT_DIR, "server_address.json"))
+
+        result = launchMethod(request_constructor_str(payload, "PutDataRichiestaPrenotazione"), server_coords['address'], server_coords['port'])
         result = json.loads(result)
         if result['result'] == "OK":
             QMessageBox.information(None, "Accept - Success", "Richiesta di prenotazione inviata con successo")

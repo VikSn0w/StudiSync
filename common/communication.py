@@ -195,3 +195,9 @@ def filter_dates_after_current(dates):
             matching_rows.append(row)
 
     return matching_rows
+
+def loadJSONFromFile(json_file):
+    f = open(json_file)
+    data = json.load(f)
+    f.close()
+    return data

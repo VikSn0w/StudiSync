@@ -7,10 +7,10 @@ import time
 
 from common.bcolors import bcolors
 from common.full_write import full_write
+from common.communication import loadJSONFromFile
 from server_side import method_switch
 
 MAXLINE = 256
-
 
 class MyHandler(socketserver.StreamRequestHandler):
     def handle(self):
@@ -70,4 +70,5 @@ def server_main(server_address, server_port):
 
 
 if __name__ == "__main__":
-    server_main('127.0.0.1', 5000)
+    server_coords = loadJSONFromFile("server_address.json")
+    server_main(server_coords['address'], server_coords['port'])

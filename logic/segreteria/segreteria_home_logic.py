@@ -10,7 +10,6 @@ from logic.segreteria.segreteria_dialog_inoltra_prenotazione_logic import Segret
 from logic.segreteria.segreteria_dialog_fornisci_date_logic import SegreteriaDialogFornisciDateLogic
 class SegreteriaHomeLogic(QMainWindow):
     user = None
-    lauree = find_rows("db\\esami\\laurea.csv", None)
     def __init__(self, user):
         self.user = user
         super().__init__()

@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 
 from PyQt5.QtWidgets import QApplication, QMessageBox, QDialog, QVBoxLayout, QPushButton, QLabel, \
@@ -6,7 +7,7 @@ from PyQt5.QtWidgets import QApplication, QMessageBox, QDialog, QVBoxLayout, QPu
 # from pyqt5_plugins.examplebutton import QtWidgets
 
 from SelMultiplexClient import launchMethod
-from common.communication import request_constructor_str
+from common.communication import request_constructor_str, loadJSONFromFile
 from gui.segreteria.segreteria_dialog_inoltra_prenotazione import Ui_InoltraPrenotazione
 
 
@@ -22,7 +23,9 @@ class SegreteriaDialogInoltraPrenotazioneLogic(QDialog):
 
 
     def aggiornaRichieste(self):
-        rows = launchMethod(request_constructor_str({}, "GetRichiestePrenotazioniAppelliNonEvase"), "127.0.0.1", 5000)
+        ROOT_DIR = os.path.abspath(os.curdir)
+        server_coords = loadJSONFromFile(os.path.join(ROOT_DIR, "server_address.json"))
+        rows = launchMethod(request_constructor_str({}, "GetRichiestePrenotazioniAppelliNonEvase"), server_coords['address'], server_coords['port'])
         rows = json.loads(rows)
         print(rows)
         if rows["result"] == "false":
@@ -63,7 +66,9 @@ class SegreteriaDialogInoltraPrenotazioneLogic(QDialog):
         self.ui.TableView.addLayout(layout)
 
     def accettaRichiesta(self, ID:str):
-        row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"1"}, "AggiornaRichiesteAppelli"), "127.0.0.1", 5000)
+        ROOT_DIR = os.path.abspath(os.curdir)
+        server_coords = loadJSONFromFile(os.path.join(ROOT_DIR, "server_address.json"))
+        row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"1"}, "AggiornaRichiesteAppelli"), server_coords['address'], server_coords['port'])
         row = json.loads(row)
 
         QMessageBox.information(None, "Accept - Success","Richiesta accetta con successo")
@@ -72,7 +77,9 @@ class SegreteriaDialogInoltraPrenotazioneLogic(QDialog):
         self.aggiornaRichieste()
 
     def rifiutaRichiesta(self, ID:str):
-        row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"0"}, "AggiornaRichiesteAppelli"), "127.0.0.1", 5000)
+        ROOT_DIR = os.path.abspath(os.curdir)
+        server_coords = loadJSONFromFile(os.path.join(ROOT_DIR, "server_address.json"))
+        row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"0"}, "AggiornaRichiesteAppelli"), server_coords['address'], server_coords['port'])
         row = json.loads(row)
 
         QMessageBox.information(None, "Decline - Success", "Richiesta rifiutata con successo")

@@ -1,11 +1,12 @@
 import json
+import os
 
 from PyQt5.QtWidgets import QMessageBox, QDialog, QLabel, QPushButton, QVBoxLayout, \
     QHBoxLayout
 # from pyqt5_plugins.examplebutton import QtWidgets
 
 from SelMultiplexClient import launchMethod
-from common.communication import request_constructor_str
+from common.communication import request_constructor_str, loadJSONFromFile
 from gui.segreteria.segreteria_dialog_fornisci_date import Ui_FornisciDate
 
 
@@ -21,7 +22,9 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
 
 
     def aggiornaRichieste(self):
-        rows = launchMethod(request_constructor_str({}, "GetRichiesteDateEsamiNonEvase"), "127.0.0.1", 5000)
+        ROOT_DIR = os.path.abspath(os.curdir)
+        server_coords = loadJSONFromFile(os.path.join(ROOT_DIR, "server_address.json"))
+        rows = launchMethod(request_constructor_str({}, "GetRichiesteDateEsamiNonEvase"), server_coords['address'], server_coords['port'])
         rows = json.loads(rows)
 
         #print(rows)
@@ -66,7 +69,9 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
         self.ui.TableView.addLayout(layout)
 
     def Fornisci(self, ID:str):
-        row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"1"}, "AggiornaRichiestaDate"), "127.0.0.1", 5000)
+        ROOT_DIR = os.path.abspath(os.curdir)
+        server_coords = loadJSONFromFile(os.path.join(ROOT_DIR, "server_address.json"))
+        row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"1"}, "AggiornaRichiestaDate"), server_coords['address'], server_coords['port'])
         row = json.loads(row)
 
         QMessageBox.information(None, "Accept - Success","Richiesta accetta con successo")
@@ -75,7 +80,9 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
         self.aggiornaRichieste()
 
     def rifiutaRichiesta(self, ID:str):
-        row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"0"}, "AggiornaRichiestaData"), "127.0.0.1", 5000)
+        ROOT_DIR = os.path.abspath(os.curdir)
+        server_coords = loadJSONFromFile(os.path.join(ROOT_DIR, "server_address.json"))
+        row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"0"}, "AggiornaRichiestaData"), server_coords['address'], server_coords['port'])
         row = json.loads(row)
 
         QMessageBox.information(None, "Decline - Success", "Richiesta rifiutata con successo")

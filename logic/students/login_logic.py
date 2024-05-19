@@ -6,10 +6,9 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 # from pyqt5_plugins.examplebutton import QtWidgets
 
 from SelMultiplexClient import launchMethod
-from common.communication import customHash, request_constructor_str, formato_data
+from common.communication import customHash, request_constructor_str
 from gui.login_gui import Ui_Login
-from logic import students_home_logic
-from logic import segreteria_home_logic
+
 
 class LoginLogic(QMainWindow):
 

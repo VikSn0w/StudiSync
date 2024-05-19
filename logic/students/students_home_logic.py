@@ -1,8 +1,8 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QDialog
+from PyQt5.QtWidgets import QMainWindow
 
-from common.communication import customHash, request_constructor_str, formato_data,request_constructor_obj
-from gui.students_home_gui import Ui_Students_Home
-from logic.students_dialog_richiedi_date_logic import StudentsDialogRichiestaDateLogic
+from common.communication import formato_data
+from gui.students.students_home_gui import Ui_Students_Home
+from logic.students.students_dialog_richiedi_date_logic import StudentsDialogRichiestaDateLogic
 
 
 class StudentsHomeLogic(QMainWindow):

@@ -1,24 +1,20 @@
 import json
 import sys
-import os
 
-from PyQt5.QtCore import QRegExp
-from PyQt5.QtGui import QRegExpValidator
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QDialog, QLabel, QPushButton, QVBoxLayout, \
+from PyQt5.QtWidgets import QApplication, QMessageBox, QDialog, QVBoxLayout, QPushButton, QLabel, \
     QHBoxLayout
 # from pyqt5_plugins.examplebutton import QtWidgets
-from common.communication import find_rows
 
 from SelMultiplexClient import launchMethod
-from common.communication import customHash, request_constructor_str, formato_data
-from gui.segreteria_dialog_fornisci_date import Ui_FornisciDate
+from common.communication import request_constructor_str
+from gui.segreteria.segreteria_dialog_inoltra_prenotazione import Ui_InoltraPrenotazione
 
 
-class SegreteriaDialogFornisciDateLogic(QDialog):
+class SegreteriaDialogInoltraPrenotazioneLogic(QDialog):
 
     def __init__(self):
         super().__init__()
-        self.ui = Ui_FornisciDate()
+        self.ui = Ui_InoltraPrenotazione()
         self.ui.setupUi(self)
         self.ui.AggiornaButton.clicked.connect(self.aggiornaRichieste)
         self.data = None
@@ -26,10 +22,9 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
 
 
     def aggiornaRichieste(self):
-        rows = launchMethod(request_constructor_str({}, "GetRichiesteDateEsamiNonEvase"), "127.0.0.1", 5000)
+        rows = launchMethod(request_constructor_str({}, "GetRichiestePrenotazioniAppelliNonEvase"), "127.0.0.1", 5000)
         rows = json.loads(rows)
-
-        #print(rows)
+        print(rows)
         if rows["result"] == "false":
             QMessageBox.information(None, "Attenzione",
                                     f"Nessuna richiesta disponibile")
@@ -41,6 +36,7 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
                 self.data = rows
             elif self.data != rows:
                 self.data = rows
+                self.clearTableView()
                 for r in rows["result"]:
                     self.createRow(r)
 
@@ -48,16 +44,13 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
     def createRow(self, data):
         layout = QHBoxLayout()
 
-        print(data)
-
-        del data[3]
         for d in data[1:]:
             layout.addWidget(QLabel(d))
 
         button_layout = QVBoxLayout()
 
-        newButton_approve = QPushButton("Fornisci Date")
-        newButton_approve.clicked.connect(lambda: self.Fornisci(data[0]))
+        newButton_approve = QPushButton("Approva")
+        newButton_approve.clicked.connect(lambda: self.accettaRichiesta(data[0]))
         button_layout.addWidget(newButton_approve)
 
         newButton_decline = QPushButton("Declina")
@@ -69,8 +62,8 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
         # Set the layout of the widget
         self.ui.TableView.addLayout(layout)
 
-    def Fornisci(self, ID:str):
-        row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"1"}, "AggiornaRichiestaDate"), "127.0.0.1", 5000)
+    def accettaRichiesta(self, ID:str):
+        row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"1"}, "AggiornaRichiesteAppelli"), "127.0.0.1", 5000)
         row = json.loads(row)
 
         QMessageBox.information(None, "Accept - Success","Richiesta accetta con successo")
@@ -79,7 +72,7 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
         self.aggiornaRichieste()
 
     def rifiutaRichiesta(self, ID:str):
-        row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"0"}, "AggiornaRichiestaData"), "127.0.0.1", 5000)
+        row = launchMethod(request_constructor_str({"ID":ID, "isAccettata":"0"}, "AggiornaRichiesteAppelli"), "127.0.0.1", 5000)
         row = json.loads(row)
 
         QMessageBox.information(None, "Decline - Success", "Richiesta rifiutata con successo")
@@ -111,3 +104,15 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
                 self.clearLayout(item.layout())
 
 
+
+
+
+
+
+
+if __name__ == '__main__':
+
+    app = QApplication(sys.argv)
+    window = SegreteriaDialogInoltraPrenotazioneLogic()
+    window.show()
+    sys.exit(app.exec_())

@@ -1,16 +1,13 @@
-import sys
-import os
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
+from PyQt5.QtWidgets import QMainWindow
 # from pyqt5_plugins.examplebutton import QtWidgets
 from common.communication import find_rows
 
-from SelMultiplexClient import launchMethod
-from common.communication import customHash, request_constructor_str, formato_data
-from gui.segreteria_home_gui import Ui_Segreteria_Home
-from logic.segreteria_dialog_inserisci_laurea_logic import SegreteriaDialogInserisciLaureaLogic
-from logic.segreteria_dialog_inserisci_esame_logic import SegreteriaDialogInserisciEsameLogic
-from logic.segreteria_dialog_inoltra_prenotazione_logic import SegreteriaDialogInoltraPrenotazioneLogic
-from logic.segreteria_dialog_fornisci_date_logic import SegreteriaDialogFornisciDateLogic
+from common.communication import formato_data
+from gui.segreteria.segreteria_home_gui import Ui_Segreteria_Home
+from logic.segreteria.segreteria_dialog_inserisci_laurea_logic import SegreteriaDialogInserisciLaureaLogic
+from logic.segreteria.segreteria_dialog_inserisci_esame_logic import SegreteriaDialogInserisciEsameLogic
+from logic.segreteria.segreteria_dialog_inoltra_prenotazione_logic import SegreteriaDialogInoltraPrenotazioneLogic
+from logic.segreteria.segreteria_dialog_fornisci_date_logic import SegreteriaDialogFornisciDateLogic
 class SegreteriaHomeLogic(QMainWindow):
     user = None
     lauree = find_rows("db\\esami\\laurea.csv", None)

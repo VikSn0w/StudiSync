@@ -1,15 +1,10 @@
-import os
-import platform
-import subprocess
 import sys
-from multiprocessing import Process
 
 from PyQt5.QtWidgets import QApplication
 
-from logic.login_logic import LoginLogic
-from logic.students_home_logic import StudentsHomeLogic
-from logic.segreteria_home_logic import SegreteriaHomeLogic
-from combined_multiplex_concurrent_server import server_main
+from logic.students.login_logic import LoginLogic
+from logic.students.students_home_logic import StudentsHomeLogic
+from logic.segreteria.segreteria_home_logic import SegreteriaHomeLogic
 
 
 def main():

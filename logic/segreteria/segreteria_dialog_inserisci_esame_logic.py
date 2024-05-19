@@ -1,16 +1,11 @@
 import json
-import sys
-import os
 
-from PyQt5.QtCore import QRegExp
-from PyQt5.QtGui import QRegExpValidator
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QDialog
+from PyQt5.QtWidgets import QMessageBox, QDialog
 # from pyqt5_plugins.examplebutton import QtWidgets
-from common.communication import find_rows
 
 from SelMultiplexClient import launchMethod
-from common.communication import customHash, request_constructor_str, formato_data
-from gui.segreteria_dialog_inserisci_esame_gui import Ui_segreteria_dialog_inserisci_esame
+from common.communication import request_constructor_str
+from gui.segreteria.segreteria_dialog_inserisci_esame_gui import Ui_segreteria_dialog_inserisci_esame
 
 
 class SegreteriaDialogInserisciEsameLogic(QDialog):

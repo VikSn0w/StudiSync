@@ -198,6 +198,16 @@ def PutDataRichiestaDate(payload):
     except Exception as e:
         return {"result": f"Not OK error: {e}"}
 
+def PutDataRichiestaPrenotazione(payload):
+    try:
+        insert_row(csv_file=DB["RICHIESTE_PRENOTAZIONI_ESAMI"],
+               data_row=[payload["MatricolaRichiedente"], payload["ID_Appello"], "?"])
+        update_row(csv_file=DB["RICHIESTE_DATE_ESAMI"], row_id=payload["ID_Richiesta"], column_name="isAccettata",new_value="3")
+
+        return {"result": "OK"}
+    except Exception as e:
+        return {"result": f"Not OK error: {e}"}
+
 def method_switch(method, payload):
     match method:
 
@@ -231,6 +241,9 @@ def method_switch(method, payload):
 
         case "PutDataRichiestaDate":
             return PutDataRichiestaDate(payload)
+
+        case "PutDataRichiestaPrenotazione":
+            return PutDataRichiestaPrenotazione(payload)
 
         case "GetRichiesteDateEsamiByMatricola":
             return GetRichiesteDateEsamiByMatricola(payload)

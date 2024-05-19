@@ -1,19 +1,13 @@
 import json
-import sys
-import os
 import re
 
-
-from PyQt5.QtCore import QRegExp
-from PyQt5.QtGui import QRegExpValidator
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QDialog, QHBoxLayout, QLabel, QVBoxLayout, \
-    QPushButton
+from PyQt5.QtWidgets import QMessageBox, QDialog, QHBoxLayout, QLabel, QPushButton
 # from pyqt5_plugins.examplebutton import QtWidgets
-from common.communication import find_rows
 
 from SelMultiplexClient import launchMethod
-from common.communication import customHash, request_constructor_str, formato_data
-from gui.students_dialog_invio_richiesta_date_esami_gui import Ui_Invio_Richiesta_Date_Esami
+from common.communication import request_constructor_str
+from gui.students.students_dialog_invio_richiesta_date_esami_gui import Ui_Invio_Richiesta_Date_Esami
+from logic.students.students_dialog_seleziona_appello_logic import StudentsDialogRichiestaPrenotazioneLogic
 
 
 class StudentsDialogRichiestaDateLogic(QDialog):
@@ -42,7 +36,7 @@ class StudentsDialogRichiestaDateLogic(QDialog):
         payload = {"Matricola": self.user[0]}
         rows = json.loads(launchMethod(request_constructor_str(payload, "GetRichiesteDateEsamiByMatricola"), "127.0.0.1", 5000))
 
-        #print(rows)
+        print(rows)
         if rows["result"] == "false":
             QMessageBox.information(None, "Attenzione",
                                     f"Nessuna richiesta disponibile")
@@ -54,6 +48,7 @@ class StudentsDialogRichiestaDateLogic(QDialog):
                 self.data = rows
             elif self.data != rows:
                 self.data = rows
+                self.clearTableView()
                 for r in rows["result"]:
                     self.createRow(r)
 
@@ -79,7 +74,7 @@ class StudentsDialogRichiestaDateLogic(QDialog):
         layout.addWidget(QLabel(data[1]))
 
         newButton_mostradate = QPushButton("Mostra date")
-        newButton_mostradate.clicked.connect(lambda: self.showDialogDates(data[3]))
+        newButton_mostradate.clicked.connect(lambda: self.showDialogDates(data[0], data[3]))
 
         if data[2] == "?":
             label = QLabel("In attesa")
@@ -96,14 +91,25 @@ class StudentsDialogRichiestaDateLogic(QDialog):
             label.setStyleSheet('color: green')
             layout.addWidget(label)
             newButton_mostradate.setEnabled(True)
+        elif data[2] == "3":
+            label = QLabel("Evasa")
+            label.setStyleSheet('color: black')
+            layout.addWidget(label)
+            newButton_mostradate.setEnabled(False)
 
         layout.addWidget(newButton_mostradate)
 
         # Set the layout of the widget
         self.ui.TableView.addLayout(layout)
 
-    def showDialogDates(self, data):
-        QMessageBox.information(None, "Placeholder della dialogbox", f"JSON Date ricevuto {data}")
+    def showDialogDates(self, id, data):
+        data = data.replace("'",'"')
+        data = json.loads(data)
+        data["id_request"] = id
+        dialog = StudentsDialogRichiestaPrenotazioneLogic(self.user, data)
+        dialog.exec_()
+        self.clearTableView()
+        self.aggiornaStorico()
 
     def clearTableView(self):
         # Remove all layouts from TableView

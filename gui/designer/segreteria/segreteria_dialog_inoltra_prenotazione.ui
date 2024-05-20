@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>745</width>
-    <height>250</height>
+    <width>487</width>
+    <height>425</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -68,8 +68,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>725</width>
-        <height>151</height>
+        <width>467</width>
+        <height>326</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -85,19 +85,6 @@
            </property>
            <property name="text">
             <string>Matricola</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_10">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Data Richiesta</string>
            </property>
           </widget>
          </item>

@@ -59,7 +59,7 @@ class SegreteriaDialogFornisciDateLogic(QDialog):
         newButton_approve.clicked.connect(lambda: self.Fornisci(data[0]))
         button_layout.addWidget(newButton_approve)
 
-        newButton_decline = QPushButton("Declina")
+        newButton_decline = QPushButton("Rifiuta")
         newButton_decline.clicked.connect(lambda: self.rifiutaRichiesta(data[0]))
         button_layout.addWidget(newButton_decline)
 

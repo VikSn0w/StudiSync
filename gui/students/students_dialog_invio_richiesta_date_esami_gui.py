@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'students_dialog_invio_richiesta_date_esami_gui.ui'
+# Form implementation generated from reading ui file '.\students_dialog_invio_richiesta_date_esami_gui.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -93,7 +93,7 @@ class Ui_Invio_Richiesta_Date_Esami(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 514, 242))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 514, 217))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
@@ -135,6 +135,28 @@ class Ui_Invio_Richiesta_Date_Esami(object):
         self.verticalLayout_3.addItem(spacerItem1)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
         self.verticalLayout.addWidget(self.scrollArea)
+        self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.TutteRadio = QtWidgets.QRadioButton(Invio_Richiesta_Date_Esami)
+        self.TutteRadio.setChecked(True)
+        self.TutteRadio.setObjectName("TutteRadio")
+        self.horizontalLayout_5.addWidget(self.TutteRadio)
+        self.AttesaRadio = QtWidgets.QRadioButton(Invio_Richiesta_Date_Esami)
+        self.AttesaRadio.setObjectName("AttesaRadio")
+        self.horizontalLayout_5.addWidget(self.AttesaRadio)
+        self.AccettateRadio = QtWidgets.QRadioButton(Invio_Richiesta_Date_Esami)
+        self.AccettateRadio.setEnabled(True)
+        self.AccettateRadio.setObjectName("AccettateRadio")
+        self.horizontalLayout_5.addWidget(self.AccettateRadio)
+        self.RifiutateRadio = QtWidgets.QRadioButton(Invio_Richiesta_Date_Esami)
+        self.RifiutateRadio.setEnabled(True)
+        self.RifiutateRadio.setObjectName("RifiutateRadio")
+        self.horizontalLayout_5.addWidget(self.RifiutateRadio)
+        self.EvaseRadio = QtWidgets.QRadioButton(Invio_Richiesta_Date_Esami)
+        self.EvaseRadio.setEnabled(True)
+        self.EvaseRadio.setObjectName("EvaseRadio")
+        self.horizontalLayout_5.addWidget(self.EvaseRadio)
+        self.verticalLayout.addLayout(self.horizontalLayout_5)
         self.AggiornaStoricoButton = QtWidgets.QPushButton(Invio_Richiesta_Date_Esami)
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -159,6 +181,11 @@ class Ui_Invio_Richiesta_Date_Esami(object):
         self.label_11.setText(_translate("Invio_Richiesta_Date_Esami", "Corso"))
         self.label_12.setText(_translate("Invio_Richiesta_Date_Esami", "Stato"))
         self.label_14.setText(_translate("Invio_Richiesta_Date_Esami", "Azione"))
+        self.TutteRadio.setText(_translate("Invio_Richiesta_Date_Esami", "Tutte"))
+        self.AttesaRadio.setText(_translate("Invio_Richiesta_Date_Esami", "In attesa"))
+        self.AccettateRadio.setText(_translate("Invio_Richiesta_Date_Esami", "Accettate"))
+        self.RifiutateRadio.setText(_translate("Invio_Richiesta_Date_Esami", "Rifiutate"))
+        self.EvaseRadio.setText(_translate("Invio_Richiesta_Date_Esami", "Evase"))
         self.AggiornaStoricoButton.setText(_translate("Invio_Richiesta_Date_Esami", "Aggiorna Storico"))
 
 

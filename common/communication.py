@@ -71,7 +71,7 @@ def find_rows(csv_file, search_criteria = None):
 import csv
 
 
-def find_rows_v2(csv_file, search_criteria=None):
+def find_rows_v2(csv_file, search_criteria_list=None):
     matching_rows = []
 
     with open(csv_file, 'r', newline='') as file:
@@ -79,18 +79,19 @@ def find_rows_v2(csv_file, search_criteria=None):
         header = next(reader)  # Assuming the first row is the header
 
         for row in reader:
-            if search_criteria is None:  # I just want all tuples
+            # If no search criteria are provided, return all rows
+            if search_criteria_list is None:
                 matching_rows.append(row)
             else:
-                # Check if the row matches all criteria
-                match = True
-                for column, values in search_criteria.items():
-                    column_index = header.index(column)
-                    if not any(row[column_index] == str(value) for value in values):
-                        match = False
+                # Check if the row matches any of the criteria in the list
+                row_matches = False
+                for search_criteria in search_criteria_list:
+                    # Check if all criteria in the dictionary match
+                    matches = all(row[header.index(column)] == str(value) for column, value in search_criteria.items())
+                    if matches:
+                        row_matches = True
                         break
-
-                if match:
+                if row_matches:
                     matching_rows.append(row)
 
     return matching_rows

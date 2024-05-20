@@ -15,6 +15,7 @@ class StudentsDialogRichiestaDateLogic(QDialog):
 
     def __init__(self,user):
         super().__init__()
+        self.dataToShow = "All"
         ROOT_DIR = os.path.abspath(os.curdir)
         server_coords = loadJSONFromFile(os.path.join(ROOT_DIR, "server_address.json"))
         self.user = user
@@ -29,22 +30,44 @@ class StudentsDialogRichiestaDateLogic(QDialog):
                 self.ui.comboBox.addItem(newstr)
         self.ui.InviaRichiestaButton.clicked.connect(self.inviaRichiesta)
         self.ui.AggiornaStoricoButton.clicked.connect(self.aggiornaStorico)
+
+        self.ui.TutteRadio.toggled.connect(lambda: self.updateDataToShow("All"))
+        self.ui.EvaseRadio.toggled.connect(lambda: self.updateDataToShow("Evase"))
+        self.ui.AccettateRadio.toggled.connect(lambda: self.updateDataToShow("Accettate"))
+        self.ui.RifiutateRadio.toggled.connect(lambda: self.updateDataToShow("Rifiutate"))
+        self.ui.AttesaRadio.toggled.connect(lambda: self.updateDataToShow("Attesa"))
+
         self.data = None
         self.aggiornaStorico()
 
 
-
+    def updateDataToShow(self, update:str):
+        self.dataToShow = str(update)
+        self.aggiornaStorico()
 
     def aggiornaStorico(self):
         payload = {"Matricola": self.user[0]}
         ROOT_DIR = os.path.abspath(os.curdir)
         server_coords = loadJSONFromFile(os.path.join(ROOT_DIR, "server_address.json"))
-        rows = json.loads(launchMethod(request_constructor_str(payload, "GetRichiesteDateEsamiByMatricola"), server_coords['address'], server_coords['port']))
+        rows = None
+
+        match self.dataToShow:
+            case "All":
+                rows = json.loads(launchMethod(request_constructor_str(payload, "GetRichiesteDateEsamiByMatricola"), server_coords['address'], server_coords['port']))
+            case "Evase":
+                 rows = json.loads(launchMethod(request_constructor_str(payload, "GetRichiesteDateEsamiByMatricolaEvase"), server_coords['address'],server_coords['port']))
+            case "Accettate":
+                rows = json.loads(launchMethod(request_constructor_str(payload, "GetRichiesteDateEsamiByMatricolaAccettate"), server_coords['address'],server_coords['port']))
+            case "Rifiutate":
+                rows = json.loads(launchMethod(request_constructor_str(payload, "GetRichiesteDateEsamiByMatricolaRifiutate"), server_coords['address'],server_coords['port']))
+            case "Attesa":
+                rows = json.loads(launchMethod(request_constructor_str(payload, "GetRichiesteDateEsamiByMatricolaAttesa"),server_coords['address'], server_coords['port']))
 
         print(rows)
         if rows["result"] == "false":
             QMessageBox.information(None, "Attenzione",
                                     f"Nessuna richiesta disponibile")
+            self.clearTableView()
             self.data = None
         else:
             if self.data == None:
@@ -89,7 +112,7 @@ class StudentsDialogRichiestaDateLogic(QDialog):
             layout.addWidget(label)
             newButton_mostradate.setEnabled(False)
         elif data[2] == "0":
-            label = QLabel("Declinata")
+            label = QLabel("Rifiutata")
             label.setStyleSheet('color: red')
             layout.addWidget(label)
             newButton_mostradate.setEnabled(False)

@@ -24,6 +24,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\db\prenotazioni\richiesteDateEsami.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\db\prenotazioni\richiestePrenotazioneEsami.csv">
           <value>
             <Attribute>

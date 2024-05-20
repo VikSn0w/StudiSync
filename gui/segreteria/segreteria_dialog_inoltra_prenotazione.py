@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'segreteria_dialog_inoltra_prenotazione.ui'
+# Form implementation generated from reading ui file '.\segreteria_dialog_inoltra_prenotazione.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_InoltraPrenotazione(object):
     def setupUi(self, InoltraPrenotazione):
         InoltraPrenotazione.setObjectName("InoltraPrenotazione")
-        InoltraPrenotazione.resize(745, 250)
+        InoltraPrenotazione.resize(487, 425)
         self.verticalLayout = QtWidgets.QVBoxLayout(InoltraPrenotazione)
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
@@ -38,7 +38,7 @@ class Ui_InoltraPrenotazione(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 725, 151))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 467, 326))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
@@ -51,13 +51,6 @@ class Ui_InoltraPrenotazione(object):
         self.label_9.setFont(font)
         self.label_9.setObjectName("label_9")
         self.horizontalLayout_4.addWidget(self.label_9)
-        self.label_10 = QtWidgets.QLabel(self.scrollAreaWidgetContents_2)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_10.setFont(font)
-        self.label_10.setObjectName("label_10")
-        self.horizontalLayout_4.addWidget(self.label_10)
         self.label_11 = QtWidgets.QLabel(self.scrollAreaWidgetContents_2)
         font = QtGui.QFont()
         font.setBold(True)
@@ -111,7 +104,6 @@ class Ui_InoltraPrenotazione(object):
         self.label_8.setText(_translate("InoltraPrenotazione", "Richieste di prenotazione"))
         self.AggiornaButton.setText(_translate("InoltraPrenotazione", "Aggiorna"))
         self.label_9.setText(_translate("InoltraPrenotazione", "Matricola"))
-        self.label_10.setText(_translate("InoltraPrenotazione", "Data Richiesta"))
         self.label_11.setText(_translate("InoltraPrenotazione", "Nome"))
         self.label_12.setText(_translate("InoltraPrenotazione", "Cognome"))
         self.label_13.setText(_translate("InoltraPrenotazione", "Data Appello"))

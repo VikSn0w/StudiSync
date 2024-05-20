@@ -110,6 +110,86 @@ def GetRichiesteDateEsamiByMatricola(payload):
     else:
         return {"result": "false"}
 
+def GetRichiesteDateEsamiByMatricolaEvase(payload):
+    result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
+    app = []
+    for row in result_row:
+        if row[3] == "3":
+            app.append(row)
+    result_row = app
+    if result_row:
+        final_row = []
+        for row in result_row:
+            tmp = []
+            tmp.append(row[0])
+            tmp.append(row[2])
+            tmp.append(row[3])
+            tmp.append(row[4])
+            final_row.append(tmp)
+        return {"result": final_row}
+    else:
+        return {"result": "false"}
+
+def GetRichiesteDateEsamiByMatricolaAccettate(payload):
+    result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
+    app = []
+    for row in result_row:
+        if row[3] == "1":
+            app.append(row)
+    result_row = app
+    if result_row:
+        final_row = []
+        for row in result_row:
+            tmp = []
+            tmp.append(row[0])
+            tmp.append(row[2])
+            tmp.append(row[3])
+            tmp.append(row[4])
+            final_row.append(tmp)
+        return {"result": final_row}
+    else:
+        return {"result": "false"}
+
+def GetRichiesteDateEsamiByMatricolaRifiutate(payload):
+    result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
+    app = []
+    for row in result_row:
+        if row[3] == "0":
+            app.append(row)
+    result_row = app
+    if result_row:
+        final_row = []
+        for row in result_row:
+            tmp = []
+            tmp.append(row[0])
+            tmp.append(row[2])
+            tmp.append(row[3])
+            tmp.append(row[4])
+            final_row.append(tmp)
+        return {"result": final_row}
+    else:
+        return {"result": "false"}
+
+def GetRichiesteDateEsamiByMatricolaAttesa(payload):
+    result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
+    app = []
+    for row in result_row:
+        if row[3] == "?":
+            app.append(row)
+    result_row = app
+    if result_row:
+        final_row = []
+        for row in result_row:
+            tmp = []
+            tmp.append(row[0])
+            tmp.append(row[2])
+            tmp.append(row[3])
+            tmp.append(row[4])
+            final_row.append(tmp)
+        return {"result": final_row}
+    else:
+        return {"result": "false"}
+
 def GetRichiesteDateEsamiNonEvase():
     result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"isAccettata": "?"})
     if result_row:
@@ -247,6 +327,18 @@ def method_switch(method, payload):
 
         case "GetRichiesteDateEsamiByMatricola":
             return GetRichiesteDateEsamiByMatricola(payload)
+
+        case "GetRichiesteDateEsamiByMatricolaEvase":
+            return GetRichiesteDateEsamiByMatricolaEvase(payload)
+
+        case "GetRichiesteDateEsamiByMatricolaRifiutate":
+            return GetRichiesteDateEsamiByMatricolaRifiutate(payload)
+
+        case "GetRichiesteDateEsamiByMatricolaAccettate":
+            return GetRichiesteDateEsamiByMatricolaAccettate(payload)
+
+        case "GetRichiesteDateEsamiByMatricolaAttesa":
+            return GetRichiesteDateEsamiByMatricolaAttesa(payload)
 
         case _:
             return default_case()

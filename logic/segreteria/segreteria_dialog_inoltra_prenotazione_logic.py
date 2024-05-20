@@ -47,6 +47,7 @@ class SegreteriaDialogInoltraPrenotazioneLogic(QDialog):
     def createRow(self, data):
         layout = QHBoxLayout()
 
+        del data[2]
         for d in data[1:]:
             layout.addWidget(QLabel(d))
 
@@ -56,7 +57,7 @@ class SegreteriaDialogInoltraPrenotazioneLogic(QDialog):
         newButton_approve.clicked.connect(lambda: self.accettaRichiesta(data[0]))
         button_layout.addWidget(newButton_approve)
 
-        newButton_decline = QPushButton("Declina")
+        newButton_decline = QPushButton("Rifiuta")
         newButton_decline.clicked.connect(lambda: self.rifiutaRichiesta(data[0]))
         button_layout.addWidget(newButton_decline)
 

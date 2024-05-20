@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'segreteria_home_gui.ui'
+# Form implementation generated from reading ui file '.\segreteria_home_gui.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -132,16 +132,10 @@ class Ui_Segreteria_Home(object):
         self.DateLabel.setText(_translate("Segreteria_Home", "Lunedì 13/05/2024 20:40"))
         self.label_7.setText(_translate("Segreteria_Home", "ID"))
         self.MtrLabel.setText(_translate("Segreteria_Home", "1"))
-        self.DateDiposnibiliEsami.setText(_translate("Segreteria_Home", "Fornisci allo studente gli \n"
-"appelli disponibili per l\'esame \n"
-"scelto dallo studente"))
-        self.InserimentoEsamiButton.setText(_translate("Segreteria_Home", "Inserisci gli esami sul \n"
-"server dell\'università "))
-        self.InoltraRichiestaButton.setText(_translate("Segreteria_Home", "Inoltra la richiesta di \n"
-"prenotazione degli studenti \n"
-"al server universitario"))
-        self.InserimentoLaureaButton.setText(_translate("Segreteria_Home", "Insersci Laurea sul \n"
-"server dell\'università"))
+        self.DateDiposnibiliEsami.setText(_translate("Segreteria_Home", "Richieste studenti"))
+        self.InserimentoEsamiButton.setText(_translate("Segreteria_Home", "Crea nuovo corso"))
+        self.InoltraRichiestaButton.setText(_translate("Segreteria_Home", "Prenotazioni appelli studenti"))
+        self.InserimentoLaureaButton.setText(_translate("Segreteria_Home", "Crea nuova laurea"))
         self.actionCIso.setText(_translate("Segreteria_Home", "CIso"))
         self.actionCiao.setText(_translate("Segreteria_Home", "Ciao"))
 

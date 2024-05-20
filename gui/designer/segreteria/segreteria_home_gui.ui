@@ -154,9 +154,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Fornisci allo studente gli 
-appelli disponibili per l'esame 
-scelto dallo studente</string>
+         <string>Richieste studenti</string>
         </property>
        </widget>
       </item>
@@ -177,8 +175,7 @@ scelto dallo studente</string>
          </font>
         </property>
         <property name="text">
-         <string>Inserisci gli esami sul 
-server dell'università </string>
+         <string>Crea nuovo corso</string>
         </property>
        </widget>
       </item>
@@ -199,9 +196,7 @@ server dell'università </string>
          </font>
         </property>
         <property name="text">
-         <string>Inoltra la richiesta di 
-prenotazione degli studenti 
-al server universitario</string>
+         <string>Prenotazioni appelli studenti</string>
         </property>
        </widget>
       </item>
@@ -222,8 +217,7 @@ al server universitario</string>
          </font>
         </property>
         <property name="text">
-         <string>Insersci Laurea sul 
-server dell'università</string>
+         <string>Crea nuova laurea</string>
         </property>
        </widget>
       </item>

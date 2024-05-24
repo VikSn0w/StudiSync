@@ -27,6 +27,12 @@ def GetStudente(payload):
     else:
         return {"result": "false"}
 
+def GetAppello(payload):
+    result_row = find_row(DB["APPELLI"], {"ID": payload["ID"]})
+    if result_row:
+        return {"result": result_row}
+    else:
+        return {"result": "false"}
 
 def GetAppello(payload):
     result_row = find_row(DB["APPELLI"], {"ID": payload["ID"]})
@@ -110,6 +116,30 @@ def GetRichiesteDateEsamiByMatricola(payload):
     else:
         return {"result": "false"}
 
+def GetPrenotazioniAppelliByMatricola(payload):
+    result_row = find_rows(DB["RICHIESTE_PRENOTAZIONI_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
+    if result_row:
+        final_row = []
+        for row in result_row:
+            tmp = []
+            appello_row = GetAppello({"ID": row[2]})
+            if appello_row["result"] != "false":
+                tmp.append(appello_row["result"][0])
+                tmp.append(appello_row["result"][1])
+                tmp.append(appello_row["result"][2])
+                tmp.append(appello_row["result"][3])
+            else:
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+            tmp.append(row[0])
+            tmp.append(row[3])
+            final_row.append(tmp)
+        return {"result": final_row}
+    else:
+        return {"result": "false"}
+
 def GetRichiesteDateEsamiByMatricolaEvase(payload):
     result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
     app = []
@@ -185,6 +215,124 @@ def GetRichiesteDateEsamiByMatricolaAttesa(payload):
             tmp.append(row[2])
             tmp.append(row[3])
             tmp.append(row[4])
+            final_row.append(tmp)
+        return {"result": final_row}
+    else:
+        return {"result": "false"}
+
+def GetPrenotazioniAppelliByMatricolaEvase(payload):
+    result_row = find_rows(DB["RICHIESTE_PRENOTAZIONI_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
+    app = []
+    for row in result_row:
+        if row[3] == "3":
+            app.append(row)
+    result_row = app
+    if result_row:
+        final_row = []
+        for row in result_row:
+            tmp = []
+            appello_row = GetAppello({"ID": row[2]})
+            if appello_row["result"] != "false":
+                tmp.append(appello_row["result"][0])
+                tmp.append(appello_row["result"][1])
+                tmp.append(appello_row["result"][2])
+                tmp.append(appello_row["result"][3])
+            else:
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+            tmp.append(row[0])
+            tmp.append(row[3])
+            final_row.append(tmp)
+        return {"result": final_row}
+    else:
+        return {"result": "false"}
+
+def GetPrenotazioniAppelliByMatricolaAccettate(payload):
+    result_row = find_rows(DB["RICHIESTE_PRENOTAZIONI_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
+    app = []
+    for row in result_row:
+        if row[3] == "1":
+            app.append(row)
+    result_row = app
+    if result_row:
+        final_row = []
+        for row in result_row:
+            print(row)
+            tmp = []
+            appello_row = GetAppello({"ID": row[2]})
+            if appello_row["result"] != "false":
+                tmp.append(appello_row["result"][0])
+                tmp.append(appello_row["result"][1])
+                tmp.append(appello_row["result"][2])
+                tmp.append(appello_row["result"][3])
+            else:
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+            tmp.append(row[0])
+            tmp.append(row[3])
+            final_row.append(tmp)
+        print(final_row)
+        return {"result": final_row}
+    else:
+        return {"result": "false"}
+
+def GetPrenotazioniAppelliByMatricolaRifiutate(payload):
+    result_row = find_rows(DB["RICHIESTE_PRENOTAZIONI_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
+    app = []
+    for row in result_row:
+        if row[3] == "0":
+            app.append(row)
+    result_row = app
+    if result_row:
+        final_row = []
+        for row in result_row:
+            tmp = []
+            appello_row = GetAppello({"ID": row[2]})
+            if appello_row["result"] != "false":
+                tmp.append(appello_row["result"][0])
+                tmp.append(appello_row["result"][1])
+                tmp.append(appello_row["result"][2])
+                tmp.append(appello_row["result"][3])
+            else:
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+            tmp.append(row[0])
+            tmp.append(row[3])
+            final_row.append(tmp)
+        return {"result": final_row}
+    else:
+        return {"result": "false"}
+
+def GetPrenotazioniAppelliByMatricolaAttesa(payload):
+    result_row = find_rows(DB["RICHIESTE_PRENOTAZIONI_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
+    app = []
+    for row in result_row:
+        if row[3] == "?":
+            app.append(row)
+    result_row = app
+    if result_row:
+        final_row = []
+        for row in result_row:
+            tmp = []
+            appello_row = GetAppello({"ID": row[2]})
+            if appello_row["result"] != "false":
+                tmp.append(appello_row["result"][0])
+                tmp.append(appello_row["result"][1])
+                tmp.append(appello_row["result"][2])
+                tmp.append(appello_row["result"][3])
+            else:
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+                tmp.append("ERRORE")
+            tmp.append(row[0])
+            tmp.append(row[3])
             final_row.append(tmp)
         return {"result": final_row}
     else:
@@ -298,6 +446,7 @@ def method_switch(method, payload):
 
         case "InsertLaurea":
             return InsertLaurea(payload)
+
         case "GetLauree":
             return GetLauree()
 
@@ -339,6 +488,21 @@ def method_switch(method, payload):
 
         case "GetRichiesteDateEsamiByMatricolaAttesa":
             return GetRichiesteDateEsamiByMatricolaAttesa(payload)
+
+        case "GetPrenotazioniAppelliByMatricolaEvase":
+            return GetPrenotazioniAppelliByMatricolaEvase(payload)
+
+        case "GetPrenotazioniAppelliByMatricolaRifiutate":
+            return GetPrenotazioniAppelliByMatricolaRifiutate(payload)
+
+        case "GetPrenotazioniAppelliByMatricolaAccettate":
+            return GetPrenotazioniAppelliByMatricolaAccettate(payload)
+
+        case "GetPrenotazioniAppelliByMatricolaAttesa":
+            return GetPrenotazioniAppelliByMatricolaAttesa(payload)
+
+        case "GetPrenotazioniAppelliByMatricola":
+            return GetPrenotazioniAppelliByMatricola(payload)
 
         case _:
             return default_case()

@@ -32,14 +32,19 @@ class StudentsDialogRichiestaDateLogic(QDialog):
         self.ui.InviaRichiestaButton.clicked.connect(self.inviaRichiesta)
         self.ui.AggiornaStoricoButton.clicked.connect(self.aggiornaStorico)
 
-        self.ui.TutteRadio.toggled.connect(lambda: self.updateDataToShow("All"))
-        self.ui.EvaseRadio.toggled.connect(lambda: self.updateDataToShow("Evase"))
-        self.ui.AccettateRadio.toggled.connect(lambda: self.updateDataToShow("Accettate"))
-        self.ui.RifiutateRadio.toggled.connect(lambda: self.updateDataToShow("Rifiutate"))
-        self.ui.AttesaRadio.toggled.connect(lambda: self.updateDataToShow("Attesa"))
+        self.ui.TutteRadio.toggled.connect(lambda checked: self.onRadioToggled("All", checked))
+        self.ui.EvaseRadio.toggled.connect(lambda checked: self.onRadioToggled("Evase", checked))
+        self.ui.AccettateRadio.toggled.connect(lambda checked: self.onRadioToggled("Accettate", checked))
+        self.ui.RifiutateRadio.toggled.connect(lambda checked: self.onRadioToggled("Rifiutate", checked))
+        self.ui.AttesaRadio.toggled.connect(lambda checked: self.onRadioToggled("Attesa", checked))
+
 
         self.data = None
         self.aggiornaStorico()
+
+    def onRadioToggled(self, update: str, checked: bool):
+        if checked:
+            self.updateDataToShow(update)
 
     def updateDataToShow(self, update: str):
         self.dataToShow = str(update)

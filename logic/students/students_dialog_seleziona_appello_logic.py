@@ -79,7 +79,7 @@ class StudentsDialogRichiestaPrenotazioneLogic(QDialog):
 
 
 def run():
-    dialog = StudentsDialogRichiestaDateLogic()
+    dialog = StudentsDialogRichiestaPrenotazioneLogic()
     dialog.exec_()
 
 

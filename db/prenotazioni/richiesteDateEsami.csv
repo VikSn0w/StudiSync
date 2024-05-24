@@ -5,3 +5,7 @@ ID,matricolaRichiedente,esameRichiesto,isAccettata,DateFornite
 4,0124002584,MAT1,?,{}
 5,0124002584,PROG1,?,{}
 6,0124002584,MAT1,?,{}
+7,a,RET,?,{}
+8,0124002584,ASD,1,{'dates': []}
+9,a,PROG2,?,{}
+10,a,MAT1,3,"{'dates': [['2', '11-06-2024 09:00:00', 'MAT1'], ['3', '10-06-2024 09:00:00', 'MAT1'], ['4', '12-06-2024 09:00:00', 'MAT1']]}"

@@ -1,4 +1,5 @@
 ID,matricolaRichiedente, ID_Appello,isAccettata
 1,0124002612,1,0
 2,0124002584,1,1
-4,0124002584,2,?
+4,0124002584,2,1
+5,a,2,1

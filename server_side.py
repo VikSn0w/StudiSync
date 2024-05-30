@@ -27,12 +27,14 @@ def GetStudente(payload):
     else:
         return {"result": "false"}
 
+
 def GetAppello(payload):
     result_row = find_row(DB["APPELLI"], {"ID": payload["ID"]})
     if result_row:
         return {"result": result_row}
     else:
         return {"result": "false"}
+
 
 def GetAppello(payload):
     result_row = find_row(DB["APPELLI"], {"ID": payload["ID"]})
@@ -116,6 +118,7 @@ def GetRichiesteDateEsamiByMatricola(payload):
     else:
         return {"result": "false"}
 
+
 def GetPrenotazioniAppelliByMatricola(payload):
     result_row = find_rows(DB["RICHIESTE_PRENOTAZIONI_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
     if result_row:
@@ -140,6 +143,7 @@ def GetPrenotazioniAppelliByMatricola(payload):
     else:
         return {"result": "false"}
 
+
 def GetRichiesteDateEsamiByMatricolaEvase(payload):
     result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
     app = []
@@ -159,6 +163,7 @@ def GetRichiesteDateEsamiByMatricolaEvase(payload):
         return {"result": final_row}
     else:
         return {"result": "false"}
+
 
 def GetRichiesteDateEsamiByMatricolaAccettate(payload):
     result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
@@ -180,6 +185,7 @@ def GetRichiesteDateEsamiByMatricolaAccettate(payload):
     else:
         return {"result": "false"}
 
+
 def GetRichiesteDateEsamiByMatricolaRifiutate(payload):
     result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
     app = []
@@ -200,6 +206,7 @@ def GetRichiesteDateEsamiByMatricolaRifiutate(payload):
     else:
         return {"result": "false"}
 
+
 def GetRichiesteDateEsamiByMatricolaAttesa(payload):
     result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
     app = []
@@ -219,6 +226,7 @@ def GetRichiesteDateEsamiByMatricolaAttesa(payload):
         return {"result": final_row}
     else:
         return {"result": "false"}
+
 
 def GetPrenotazioniAppelliByMatricolaEvase(payload):
     result_row = find_rows(DB["RICHIESTE_PRENOTAZIONI_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
@@ -248,6 +256,7 @@ def GetPrenotazioniAppelliByMatricolaEvase(payload):
         return {"result": final_row}
     else:
         return {"result": "false"}
+
 
 def GetPrenotazioniAppelliByMatricolaAccettate(payload):
     result_row = find_rows(DB["RICHIESTE_PRENOTAZIONI_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
@@ -280,6 +289,7 @@ def GetPrenotazioniAppelliByMatricolaAccettate(payload):
     else:
         return {"result": "false"}
 
+
 def GetPrenotazioniAppelliByMatricolaRifiutate(payload):
     result_row = find_rows(DB["RICHIESTE_PRENOTAZIONI_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
     app = []
@@ -309,6 +319,7 @@ def GetPrenotazioniAppelliByMatricolaRifiutate(payload):
     else:
         return {"result": "false"}
 
+
 def GetPrenotazioniAppelliByMatricolaAttesa(payload):
     result_row = find_rows(DB["RICHIESTE_PRENOTAZIONI_ESAMI"], {"matricolaRichiedente": payload["Matricola"]})
     app = []
@@ -337,6 +348,7 @@ def GetPrenotazioniAppelliByMatricolaAttesa(payload):
         return {"result": final_row}
     else:
         return {"result": "false"}
+
 
 def GetRichiesteDateEsamiNonEvase():
     result_row = find_rows(DB["RICHIESTE_DATE_ESAMI"], {"isAccettata": "?"})
@@ -395,13 +407,15 @@ def AggiornaRichiestaDate(payload):
 
     if payload["isAccettata"] == "1":
         richiesta = find_row(DB["RICHIESTE_DATE_ESAMI"], {"ID": payload["ID"]})
-        date_appelli = find_rows(DB["APPELLI"], search_criteria={"Corso":richiesta[2]})
+        date_appelli = find_rows(DB["APPELLI"], search_criteria={"Corso": richiesta[2]})
         date_appelli = filter_dates_after_current(date_appelli)
         jsonToSend = {"dates": date_appelli}
 
     jsonToSend = str(jsonToSend)
-    update_row(csv_file=DB["RICHIESTE_DATE_ESAMI"], row_id=payload["ID"], column_name="isAccettata", new_value=payload["isAccettata"])
-    update_row(csv_file=DB["RICHIESTE_DATE_ESAMI"], row_id=payload["ID"], column_name="DateFornite", new_value=f'{jsonToSend}')
+    update_row(csv_file=DB["RICHIESTE_DATE_ESAMI"], row_id=payload["ID"], column_name="isAccettata",
+               new_value=payload["isAccettata"])
+    update_row(csv_file=DB["RICHIESTE_DATE_ESAMI"], row_id=payload["ID"], column_name="DateFornite",
+               new_value=f'{jsonToSend}')
     return {"result": "OK"}
 
 
@@ -418,23 +432,36 @@ def GetCorsi():
     else:
         return {"result": "not found"}
 
+
 def PutDataRichiestaDate(payload):
     try:
         insert_row(csv_file=DB["RICHIESTE_DATE_ESAMI"],
-               data_row=[payload["MatricolaRichiedente"], payload["EsameRichiesto"], "?", '{}'])
+                   data_row=[payload["MatricolaRichiedente"], payload["EsameRichiesto"], "?", '{}'])
         return {"result": "OK"}
     except Exception as e:
         return {"result": f"Not OK error: {e}"}
+
 
 def PutDataRichiestaPrenotazione(payload):
     try:
         insert_row(csv_file=DB["RICHIESTE_PRENOTAZIONI_ESAMI"],
-               data_row=[payload["MatricolaRichiedente"], payload["ID_Appello"], "?"])
-        update_row(csv_file=DB["RICHIESTE_DATE_ESAMI"], row_id=payload["ID_Richiesta"], column_name="isAccettata",new_value="3")
+                   data_row=[payload["MatricolaRichiedente"], payload["ID_Appello"], "?"])
+        update_row(csv_file=DB["RICHIESTE_DATE_ESAMI"], row_id=payload["ID_Richiesta"], column_name="isAccettata",
+                   new_value="3")
 
         return {"result": "OK"}
     except Exception as e:
         return {"result": f"Not OK error: {e}"}
+
+
+def inserisciAppello(payload):
+    try:
+        insert_row(csv_file=DB["APPELLI"],
+                   data_row=[payload["time"], payload["corso"], payload["luogo"]])
+        return {"result": "OK"}
+    except Exception as e:
+        return {"result": f"Not OK error: {e}"}
+
 
 def method_switch(method, payload):
     match method:
@@ -503,6 +530,9 @@ def method_switch(method, payload):
 
         case "GetPrenotazioniAppelliByMatricola":
             return GetPrenotazioniAppelliByMatricola(payload)
+
+        case "inserisciAppello":
+            return inserisciAppello(payload)
 
         case _:
             return default_case()

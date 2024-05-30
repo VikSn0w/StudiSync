@@ -8,8 +8,12 @@ from logic.segreteria.segreteria_dialog_inserisci_laurea_logic import Segreteria
 from logic.segreteria.segreteria_dialog_inserisci_esame_logic import SegreteriaDialogInserisciEsameLogic
 from logic.segreteria.segreteria_dialog_inoltra_prenotazione_logic import SegreteriaDialogInoltraPrenotazioneLogic
 from logic.segreteria.segreteria_dialog_fornisci_date_logic import SegreteriaDialogFornisciDateLogic
+from logic.segreteria.segreteria_dialog_aggiungi_appello_logic import SegreteriaDialogAggiungiappelloLogic
+
+
 class SegreteriaHomeLogic(QMainWindow):
     user = None
+
     def __init__(self, user):
         self.user = user
         super().__init__()
@@ -19,10 +23,9 @@ class SegreteriaHomeLogic(QMainWindow):
         self.ui.InserimentoEsamiButton.clicked.connect(self.showDialogInserimentoEsame)
         self.ui.DateDiposnibiliEsami.clicked.connect(self.showDialogFornisciDate)
         self.ui.InoltraRichiestaButton.clicked.connect(self.showDialogInoltraPrenotazione)
-
+        self.ui.AggiungiAppello.clicked.connect(self.showDialogAggiungiAppello)
 
     def showWindow(self, user):
-
         self.show()
         self.user = user
         self.ui.MtrLabel.setText(user[0])
@@ -43,6 +46,10 @@ class SegreteriaHomeLogic(QMainWindow):
 
     def showDialogFornisciDate(self):
         dialog = SegreteriaDialogFornisciDateLogic()
+        dialog.exec_()
+
+    def showDialogAggiungiAppello(self):
+        dialog = SegreteriaDialogAggiungiappelloLogic()
         dialog.exec_()
 
 

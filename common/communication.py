@@ -48,7 +48,8 @@ def find_row(csv_file, search_criteria):
 
     return None  # Return None if the row is not found
 
-def find_rows(csv_file, search_criteria = None):
+
+def find_rows(csv_file, search_criteria=None):
     matching_rows = []
 
     with open(csv_file, 'r', newline='') as file:
@@ -59,7 +60,7 @@ def find_rows(csv_file, search_criteria = None):
             # Assuming search_criteria is a dictionary with column names as keys
             # and the corresponding values you are searching for
 
-            if search_criteria is None: #I just want all tuples
+            if search_criteria is None:  # I just want all tuples
                 matching_rows.append(row)
             else:
                 if all(row[header.index(column)] == str(value) for column, value in search_criteria.items()):
@@ -98,7 +99,6 @@ def find_rows_v2(csv_file, search_criteria_list=None):
 
 
 def insert_row(csv_file, data_row, custom_id=None):
-
     if custom_id is not None:
         new_id = custom_id
     else:
@@ -121,7 +121,7 @@ def insert_row(csv_file, data_row, custom_id=None):
     return new_id
 
 
-def update_row(csv_file:str, row_id:str, column_name:str, new_value:str):
+def update_row(csv_file: str, row_id: str, column_name: str, new_value: str):
     # Read the CSV file and store its contents in a list of dictionaries
     with open(csv_file, 'r') as file:
         csv_reader = csv.DictReader(file)
@@ -154,6 +154,7 @@ def is_number(s):
     except ValueError:
         return False
 
+
 def request_constructor_obj(input_object, header):
     return {
         "header": header,
@@ -164,10 +165,12 @@ def request_constructor_obj(input_object, header):
 def request_constructor_str(input_object, header):
     return json.dumps(request_constructor_obj(input_object, header))
 
+
 def formato_data():
     # Definisci i nomi dei giorni della settimana e dei mesi
     nomi_giorni = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"]
-    nomi_mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"]
+    nomi_mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre",
+                 "Ottobre", "Novembre", "Dicembre"]
 
     # Ottieni la data e l'ora attuali
     oggi = datetime.datetime.now()
@@ -182,9 +185,11 @@ def formato_data():
     data_formattata = f"{giorno_settimana} {giorno_mese} {mese} {anno}"
     return data_formattata
 
+
 def get_current_date():
     current_date = datetime.datetime.now()
     return current_date.strftime("%d-%m-%Y")
+
 
 def filter_dates_after_current(dates):
     current_date = datetime.datetime.now()
@@ -196,6 +201,7 @@ def filter_dates_after_current(dates):
             matching_rows.append(row)
 
     return matching_rows
+
 
 def loadJSONFromFile(json_file):
     f = open(json_file)

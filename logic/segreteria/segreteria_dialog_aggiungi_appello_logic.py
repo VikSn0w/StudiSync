@@ -46,10 +46,12 @@ class SegreteriaDialogAggiungiappelloLogic(QDialog):
         payload = {
             "corso": corso,
             "luogo": Luogo,
-            "time": time
+            "time": time + ":00"
         }
 
         res = launchMethod(request_constructor_str(payload, 'inserisciAppello'), server_coords['address'], server_coords['port'])
+        if res["result"] == 'OK':
+            QMessageBox.information(None, "Success", "Appello inserito con successo")
         print(res)
 
 

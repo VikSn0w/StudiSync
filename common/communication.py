@@ -1,6 +1,7 @@
 import csv
 import datetime
 import json
+import multiprocessing
 
 
 def parse_communication_protocol(communication_string):
@@ -99,10 +100,12 @@ def find_rows_v2(csv_file, search_criteria_list=None):
 
 
 def insert_row(csv_file, data_row, custom_id=None):
+
     if custom_id is not None:
         new_id = custom_id
     else:
         # Determine the last ID in the CSV file and increment it
+        # Critical Section Start
         with open(csv_file, 'r') as file:
             reader = csv.reader(file)
             last_row = None
@@ -112,11 +115,13 @@ def insert_row(csv_file, data_row, custom_id=None):
                 new_id = 1
             else:
                 new_id = int(last_row[0]) + 1
-
+    Lock = multiprocessing.Lock()
     # Insert the new row into the CSV file
+    Lock.acquire() #Critical section for write in files
     with open(csv_file, 'a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow([new_id] + data_row)
+    Lock.release()  # Critical Section END
 
     return new_id
 
@@ -137,12 +142,15 @@ def update_row(csv_file: str, row_id: str, column_name: str, new_value: str):
         print(f"Row with ID {row_id} not found.")
         return
 
+    Lock = multiprocessing.Lock()
     # Write the updated contents back to the CSV file
+    Lock.acquire()  # Critical section for write in files
     with open(csv_file, 'w', newline='') as file:
         fieldnames = csv_reader.fieldnames
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
+    Lock.release()
 
     print(f"Value in row {row_id}, column {column_name} updated to {new_value}.")
 

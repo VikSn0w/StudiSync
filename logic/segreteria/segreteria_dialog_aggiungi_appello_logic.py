@@ -50,6 +50,7 @@ class SegreteriaDialogAggiungiappelloLogic(QDialog):
         }
 
         res = launchMethod(request_constructor_str(payload, 'inserisciAppello'), server_coords['address'], server_coords['port'])
+        res = json.loads(res)
         if res["result"] == 'OK':
             QMessageBox.information(None, "Success", "Appello inserito con successo")
         print(res)

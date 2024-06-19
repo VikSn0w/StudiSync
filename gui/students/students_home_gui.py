@@ -101,7 +101,7 @@ class Ui_Students_Home(object):
         self.label.setText(_translate("Students_Home", "Mtr."))
         self.MtrLabel.setText(_translate("Students_Home", "0124001234"))
         self.InvioRichiestaButton.setText(_translate("Students_Home", "Chiedi alla segreteria se ci siano esami disponibili per un corso"))
-        self.InvioPrenotazioneButton.setText(_translate("Students_Home", "Invia una richiesta di prenotazione di un esame alla segreteria"))
+        self.InvioPrenotazioneButton.setText(_translate("Students_Home", "Visualizza storico richieste prenotazioni esami"))
         self.actionCIso.setText(_translate("Students_Home", "CIso"))
         self.actionCiao.setText(_translate("Students_Home", "Ciao"))
 

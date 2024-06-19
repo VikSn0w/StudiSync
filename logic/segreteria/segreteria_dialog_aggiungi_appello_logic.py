@@ -42,7 +42,8 @@ class SegreteriaDialogAggiungiappelloLogic(QDialog):
         corso = selected.group(1)
         Luogo = self.ui.Luogo.toPlainText()
         time = self.ui.dateTimeEdit.text()
-
+        time = time.replace("/", "-")
+        time = time.replace("\\", ".")
         payload = {
             "corso": corso,
             "luogo": Luogo,

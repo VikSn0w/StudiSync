@@ -88,7 +88,7 @@ Dare nomi significativi ai commit
  
 
 Consegna 
-Il progetto va consegnato tramite email al docente emanuel.dinardo@uniparthenope.it
+Il progetto va consegnato tramite email al docente REDACTED
 
 Obbligatorio inviare l'email dall'account studente
 Inserire Nome, Cognome e Marticola di tutti i membri del gruppo

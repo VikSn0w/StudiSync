@@ -5,7 +5,6 @@ import re
 from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QMessageBox, QDialog
-from PyQt6.QtCore import QDate
 
 # from pyqt5_plugins.examplebutton import QtWidgets
 

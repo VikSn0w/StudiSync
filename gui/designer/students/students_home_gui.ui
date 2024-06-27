@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1181</width>
-    <height>705</height>
+    <width>689</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="font">
@@ -136,8 +136,16 @@
       </item>
       <item>
        <widget class="QPushButton" name="InvioRichiestaButton">
+        <property name="font">
+         <font>
+          <family>Segoe UI</family>
+          <pointsize>15</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
-         <string>Chiedi alla segreteria se ci siano esami disponibili per un corso</string>
+         <string>Richiesta date esami</string>
         </property>
        </widget>
       </item>
@@ -156,8 +164,16 @@
       </item>
       <item>
        <widget class="QPushButton" name="InvioPrenotazioneButton">
+        <property name="font">
+         <font>
+          <family>Segoe UI</family>
+          <pointsize>15</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
-         <string>Invia una richiesta di prenotazione di un esame alla segreteria</string>
+         <string>Richieste di prenotazione appelli</string>
         </property>
        </widget>
       </item>
